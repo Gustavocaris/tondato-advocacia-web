@@ -1,6 +1,5 @@
+import Image from 'next/image';
 import { SITE } from '@/lib/site';
-import HeroSlides from './HeroSlides';
-import { IconeLocal } from './icons';
 import Reveal from './Reveal';
 
 export default function Hero() {
@@ -33,16 +32,16 @@ export default function Hero() {
           </div>
         </Reveal>
         <Reveal className="hero-media">
-          <HeroSlides />
-          <div className="hero-selo">
-            <div className="hero-selo-ico">
-              <IconeLocal stroke="#FBF7F1" width={18} height={18} />
-            </div>
-            <div>
-              <strong>Atendimento em Toledo/PR</strong>
-              <span>Presencial, WhatsApp ou e-mail</span>
-            </div>
-          </div>
+          <div className="hero-arco" aria-hidden="true"></div>
+          <Image
+            className="hero-foto"
+            src="/img/page-home-sem-fundo.png"
+            alt="Advogadas da Tondato Advogados Associados"
+            width={1024}
+            height={1536}
+            sizes="(max-width: 980px) 440px, 460px"
+            priority
+          />
         </Reveal>
       </div>
     </div>

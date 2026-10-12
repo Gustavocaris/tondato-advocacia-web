@@ -25,10 +25,12 @@ export default async function Sobre() {
           </Reveal>
           <Reveal className="equipe-foto">
             <Image
-              src="/img/reuniao-tondato.jpg"
-              alt="Equipe da Tondato Advogados Associados em reunião"
-              fill
-              sizes="(max-width: 980px) 100vw, 40vw"
+              src="/img/escritorio-foto.png"
+              alt="Fachada do escritório Tondato Advogados Associados, na Rua Barão do Rio Branco, 2242, em Toledo/PR"
+              width={1983}
+              height={793}
+              quality={90}
+              sizes="(max-width: 980px) 100vw, 45vw"
             />
           </Reveal>
         </div>
