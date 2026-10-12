@@ -1,13 +1,24 @@
 SITE TONDATO ADVOGADOS ASSOCIADOS
 =================================
 
+Tecnologia
+  Next.js (App Router) + React + TypeScript. Blog preparado para o Sanity.io.
+
 Estrutura
-  index.html      Conteúdo do site (textos, seções, links)
-  css/style.css   Visual e responsividade (desktop, tablet e celular)
-  js/main.js      Interações: menu mobile, destaque do menu, animações,
-                  perguntas frequentes e botão "voltar ao topo"
-  img/            Logo, fotos, ícone da aba e imagem de compartilhamento
-  robots.txt      Libera o site para o Google
+  src/app/              Páginas e layout
+    layout.tsx          Cabeçalho, rodapé, fontes, SEO (meta tags e JSON-LD)
+    page.tsx            Página inicial (monta as seções)
+    blog/page.tsx       Lista de artigos (/blog)
+    blog/[slug]/        Página de cada artigo (/blog/nome-do-artigo)
+    globals.css         Visual e responsividade (desktop, tablet e celular)
+  src/components/       Uma seção do site por arquivo (Hero, Servicos, Sobre,
+                        Duvidas, Contato, BlogSection, BlogCard...)
+  src/lib/site.ts       Telefone, e-mail, endereço e links do menu
+  src/lib/blog.ts       Acesso aos artigos (hoje dados de exemplo; depois Sanity)
+  src/data/posts.ts     Artigos de exemplo
+  src/types/blog.ts     Formato de um artigo
+  public/img/           Logo, fotos, ícone da aba e imagem de compartilhamento
+  public/robots.txt     Libera o site para o Google
 
 Pontos de quebra (responsividade)
   acima de 1180px   desktop
@@ -16,16 +27,23 @@ Pontos de quebra (responsividade)
   até 600px         celular
 
 Como ver no computador
-  Dê dois cliques em index.html.
+  Requer Node.js 20.9 ou superior.
+    npm install
+    npm run dev        e abra http://localhost:3000
 
-Como publicar (gratuito)
-  1. Acesse app.netlify.com/drop
-  2. Arraste esta pasta inteira para a página
-  3. Ligue o domínio (ex.: tondato.adv.br) em Domain management
+Como publicar
+  Vercel (recomendado) ou Netlify: importe o repositório do GitHub; o
+  build (npm run build) é detectado automaticamente. Defina a variável
+  NEXT_PUBLIC_SITE_URL com o endereço final do site (ver .env.example).
 
 Como editar textos
-  Abra index.html em um editor de texto (Bloco de Notas, VS Code)
-  e altere o texto entre as marcações. Salve e publique novamente.
+  Os textos de cada seção estão no arquivo correspondente em
+  src/components/. Contatos e endereço ficam em src/lib/site.ts.
+
+Integração com o Sanity.io (próximo passo)
+  Trocar o conteúdo das funções em src/lib/blog.ts por consultas GROQ
+  (há um exemplo de query comentado no arquivo). Os componentes não
+  precisam mudar.
 
 Pendente
   Incluir o número de inscrição da sociedade na OAB/PR no rodapé
