@@ -76,12 +76,14 @@ const jsonLd = {
   ],
 };
 
+const temaScript = `(function(){var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('tema')}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.dataset.theme=t})()`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${workSans.variable}`} suppressHydrationWarning>
       <head>
-        {/* Ativa as animações de entrada (.js .reveal) antes da primeira pintura. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Antes da primeira pintura: ativa as animações de entrada (.js) e aplica o tema salvo ou o do sistema. */}
+        <script dangerouslySetInnerHTML={{ __html: temaScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>

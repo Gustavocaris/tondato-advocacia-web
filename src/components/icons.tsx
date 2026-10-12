@@ -6,7 +6,7 @@ export const iconeProps: SVGProps<SVGSVGElement> = {
   height: 24,
   viewBox: '0 0 24 24',
   fill: 'none',
-  stroke: '#8F092A',
+  stroke: 'currentColor',
   strokeWidth: 1.8,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
