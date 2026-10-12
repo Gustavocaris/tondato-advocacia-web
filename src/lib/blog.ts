@@ -14,7 +14,8 @@ import type { Post } from '@/types/blog';
  *     "slug": slug.current,
  *     resumo,
  *     "data": publishedAt,
- *     "capaUrl": capa.asset->url
+ *     "capaUrl": capa.asset->url,
+ *     categoria
  *   }
  */
 

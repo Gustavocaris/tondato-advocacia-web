@@ -14,7 +14,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <BlogSection posts={posts} tituloComoH1 />
+      <BlogSection posts={posts} tituloComoH1 destacarPrimeiro />
       <CtaBanner />
     </>
   );
