@@ -10,6 +10,7 @@ export const POSTS_MOCK: Post[] = [
       'Entenda a diferença entre o recurso administrativo e a ação judicial, os prazos envolvidos e quais documentos reunir antes de recorrer.',
     data: '2026-09-18',
     capaUrl: '/img/reuniao-tondato.jpg',
+    categoria: 'Previdenciário',
   },
   {
     id: 'mock-2',
@@ -19,6 +20,7 @@ export const POSTS_MOCK: Post[] = [
       'Quem trabalhou parte da vida no campo e parte na cidade pode usar os dois períodos para completar a carência. Veja como funciona.',
     data: '2026-08-27',
     capaUrl: '/img/socias-tondato.jpg',
+    categoria: 'Previdenciário',
   },
   {
     id: 'mock-3',
@@ -28,6 +30,7 @@ export const POSTS_MOCK: Post[] = [
       'O benefício assistencial não exige contribuição ao INSS. Conheça os requisitos de idade, deficiência e renda familiar.',
     data: '2026-08-05',
     capaUrl: '/img/equipe-tondato.jpg',
+    categoria: 'Previdenciário',
   },
   {
     id: 'mock-4',
@@ -37,5 +40,6 @@ export const POSTS_MOCK: Post[] = [
       'São 2 anos para entrar com a ação e até 5 anos de direitos que podem ser cobrados. Saiba como os prazos são contados.',
     data: '2026-07-14',
     capaUrl: '/img/og-tondato.jpg',
+    categoria: 'Trabalhista',
   },
 ];

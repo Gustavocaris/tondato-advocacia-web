@@ -7,6 +7,8 @@ export const SITE = {
   whatsappUrl: 'https://wa.me/5545999561146',
   whatsappExibicao: '(45) 99956-1146',
   telefone: '+55 45 99956-1146',
+  /** Nº de inscrição da sociedade na OAB/PR (art. 44 do Código de Ética). Exibido no rodapé quando preenchido. */
+  oab: null as string | null,
   email: 'tondatoadvocacia@gmail.com',
   endereco: {
     rua: 'Rua Barão do Rio Branco, 2242',
@@ -14,6 +16,8 @@ export const SITE = {
     uf: 'PR',
     mapaUrl:
       'https://www.google.com/maps/search/?api=1&query=Rua+Bar%C3%A3o+do+Rio+Branco%2C+2242%2C+Toledo+PR',
+    mapaEmbedUrl:
+      'https://www.google.com/maps?q=Rua+Bar%C3%A3o+do+Rio+Branco%2C+2242%2C+Toledo+-+PR&z=16&output=embed',
   },
 } as const;
 

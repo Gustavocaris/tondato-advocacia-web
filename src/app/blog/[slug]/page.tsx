@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CtaBanner from '@/components/CtaBanner';
+import ProgressoLeitura from '@/components/ProgressoLeitura';
 import { formatarData, getPostBySlug, getPosts } from '@/lib/blog';
 
 interface PostPageProps {
@@ -31,13 +32,17 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <>
+      <ProgressoLeitura />
       <section className="artigo">
         <div className="wrap">
           <article className="artigo-conteudo">
             <Link href="/blog" className="artigo-voltar">
               ← Voltar ao blog
             </Link>
-            <time dateTime={post.data}>{formatarData(post.data)}</time>
+            <p className="artigo-meta">
+              <span className="post-cat">{post.categoria}</span>
+              <time dateTime={post.data}>{formatarData(post.data)}</time>
+            </p>
             <h1>{post.titulo}</h1>
             <p className="lead">{post.resumo}</p>
             <div className="artigo-capa">

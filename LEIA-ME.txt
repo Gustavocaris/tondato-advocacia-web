@@ -40,6 +40,28 @@ Como editar textos
   Os textos de cada seção estão no arquivo correspondente em
   src/components/. Contatos e endereço ficam em src/lib/site.ts.
 
+Equipe (bios das advogadas)
+  Nome, OAB, formação e bio de cada advogada ficam em src/data/equipe.ts.
+  Troque todo trecho "[PREENCHER]" pelos dados reais — enquanto houver
+  pendências, o build avisa e as advogadas não entram nos dados de SEO.
+  Fotos: public/img/equipe/advogada-1.jpg e advogada-2.jpg (hoje são
+  recortes provisórios; ideal: retrato vertical 3:4, mínimo 900x1200px).
+  Bios devem seguir o Provimento 205/2021 da OAB (tom informativo, sem
+  autopromoção ou promessa de resultado).
+
+Formulário de contato (envio de e-mail)
+  O formulário usa o Resend (resend.com) para enviar as mensagens ao
+  e-mail do escritório. Para ativar:
+    1. Crie uma conta gratuita em resend.com (de preferência com o e-mail
+       tondatoadvocacia@gmail.com) e gere uma API key.
+    2. Na Vercel/Netlify (e no .env.local para testar), defina
+       RESEND_API_KEY com essa chave.
+    3. Opcional: verifique o domínio do site no Resend e defina
+       CONTATO_FROM com um remetente desse domínio (ex.: contato@...).
+       Sem domínio verificado, o Resend só entrega ao e-mail dono da conta.
+  Sem a chave, o formulário aparece normalmente, mas avisa que o envio
+  está indisponível e sugere o WhatsApp.
+
 Integração com o Sanity.io (próximo passo)
   Trocar o conteúdo das funções em src/lib/blog.ts por consultas GROQ
   (há um exemplo de query comentado no arquivo). Os componentes não
