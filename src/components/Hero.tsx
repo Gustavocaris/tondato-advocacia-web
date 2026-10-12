@@ -10,7 +10,9 @@ export default function Hero() {
           <span></span>
           <span className="eyebrow">{SITE.descricaoCurta}</span>
         </div>
-        <h1>Ao seu lado na busca pelo melhor direito.</h1>
+        <h1>
+          Ao seu lado na busca pelo <em>melhor direito</em>.
+        </h1>
         <p className="lead">
           A Tondato Advogados Associados é um escritório de advocacia em Toledo/PR com atuação em Direito
           Previdenciário e Direito Trabalhista, sempre em busca do melhor direito para o segurado e para o

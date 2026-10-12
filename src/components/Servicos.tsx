@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { iconeProps } from './icons';
 import Reveal from './Reveal';
 
 interface Area {
@@ -8,17 +9,6 @@ interface Area {
   itens: string[];
 }
 
-const iconeProps = {
-  width: 24,
-  height: 24,
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: '#8F092A',
-  strokeWidth: 1.8,
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round',
-  'aria-hidden': true,
-} as const;
 
 const AREAS: Area[] = [
   {

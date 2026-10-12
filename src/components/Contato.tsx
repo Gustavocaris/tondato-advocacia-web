@@ -1,4 +1,5 @@
 import { SITE } from '@/lib/site';
+import { IconeConversa, IconeEmail, IconeLocal } from './icons';
 import Reveal from './Reveal';
 
 export default function Contato() {
@@ -12,16 +13,25 @@ export default function Contato() {
         </Reveal>
         <Reveal className="contatos">
           <div className="ct">
+            <div className="ico">
+              <IconeConversa />
+            </div>
             <small>WhatsApp</small>
             <a href={SITE.whatsappUrl} target="_blank" rel="noopener">
               {SITE.whatsappExibicao}
             </a>
           </div>
           <div className="ct">
+            <div className="ico">
+              <IconeEmail />
+            </div>
             <small>E-mail</small>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </div>
           <div className="ct">
+            <div className="ico">
+              <IconeLocal />
+            </div>
             <small>Endereço</small>
             <address>
               {SITE.endereco.rua}
