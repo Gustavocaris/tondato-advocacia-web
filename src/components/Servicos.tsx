@@ -63,9 +63,9 @@ export default function Servicos() {
             INSS, em Toledo e região.
           </p>
         </Reveal>
-        <div className="cards">
+        <Reveal className="cards" stagger>
           {AREAS.map((area) => (
-            <Reveal as="article" className="card" key={area.titulo}>
+            <article className="card" key={area.titulo}>
               <div className="ico">{area.icone}</div>
               <h3>{area.titulo}</h3>
               <p className="lead">{area.descricao}</p>
@@ -74,9 +74,9 @@ export default function Servicos() {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-            </Reveal>
+            </article>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

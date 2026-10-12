@@ -25,18 +25,18 @@ export default function BlogSection({ posts, verTodos = false, tituloComoH1 = fa
           </p>
         </Reveal>
         {posts.length > 0 ? (
-          <div className="posts">
+          <Reveal className="posts" stagger>
             {posts.map((post) => (
               <BlogCard key={post.id} post={post} />
             ))}
-          </div>
+          </Reveal>
         ) : (
           <p className="lead">Em breve, novos artigos por aqui.</p>
         )}
         {verTodos && (
           <div className="blog-acoes">
             <Link className="btn btn-ghost" href="/blog">
-              Ver todos os artigos
+              Ver todos os artigos <span className="btn-seta" aria-hidden="true">→</span>
             </Link>
           </div>
         )}

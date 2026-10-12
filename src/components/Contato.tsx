@@ -11,7 +11,7 @@ export default function Contato() {
           <h2>Fale com o escritório</h2>
           <p className="lead">Atendimento pelo WhatsApp, por e-mail ou presencialmente no escritório, em Toledo/PR.</p>
         </Reveal>
-        <Reveal className="contatos">
+        <Reveal className="contatos" stagger>
           <div className="ct">
             <div className="ico">
               <IconeConversa />
@@ -39,7 +39,7 @@ export default function Contato() {
               {SITE.endereco.cidade}/{SITE.endereco.uf}
             </address>
             <a className="mapa" href={SITE.endereco.mapaUrl} target="_blank" rel="noopener">
-              Ver no mapa →
+              Ver no mapa <span aria-hidden="true">→</span>
             </a>
           </div>
         </Reveal>

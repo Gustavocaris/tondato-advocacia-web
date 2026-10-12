@@ -5,7 +5,7 @@ import Reveal from './Reveal';
 export default function Hero() {
   return (
     <div id="topo" className="wrap hero">
-      <Reveal className="hero-txt">
+      <Reveal className="hero-txt" stagger>
         <div className="hero-tag">
           <span></span>
           <span className="eyebrow">{SITE.descricaoCurta}</span>
@@ -23,7 +23,7 @@ export default function Hero() {
             Falar no WhatsApp
           </a>
           <a className="btn btn-ghost" href="#areas">
-            Conhecer as áreas de atuação
+            Conhecer as áreas de atuação <span className="btn-seta" aria-hidden="true">→</span>
           </a>
         </div>
       </Reveal>

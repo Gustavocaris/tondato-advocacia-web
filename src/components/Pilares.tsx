@@ -1,3 +1,5 @@
+import Reveal from './Reveal';
+
 const PILARES = [
   { titulo: 'Atendimento humanizado', texto: 'Você ouvido de perto, em cada etapa' },
   { titulo: 'Análise individual', texto: 'Cada caso avaliado com atenção aos detalhes' },
@@ -8,14 +10,14 @@ const PILARES = [
 export default function Pilares() {
   return (
     <div className="pilares">
-      <div className="wrap">
+      <Reveal className="wrap" stagger>
         {PILARES.map((p) => (
           <div key={p.titulo}>
             <strong>{p.titulo}</strong>
             <span>{p.texto}</span>
           </div>
         ))}
-      </div>
+      </Reveal>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function Diferenciais() {
           <span className="eyebrow">Por que a Tondato</span>
           <h2>Perto de você em cada decisão</h2>
         </Reveal>
-        <Reveal className="grid3">
+        <Reveal className="grid3" stagger>
           {DIFERENCIAIS.map((d, i) => (
             <div key={d.titulo}>
               <span className="num">{String(i + 1).padStart(2, '0')}</span>
