@@ -5,6 +5,8 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ToTop from '@/components/ToTop';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+import { EQUIPE } from '@/data/equipe';
+import { temPendencias } from '@/lib/equipe';
 import { SITE } from '@/lib/site';
 import './globals.css';
 
@@ -47,6 +49,13 @@ export const viewport: Viewport = {
   themeColor: '#8F092A',
 };
 
+// Só entram no JSON-LD as advogadas com dados reais preenchidos.
+const advogadas = EQUIPE.filter((a) => !temPendencias(a)).map((a) => ({
+  '@type': 'Person',
+  name: a.nome,
+  jobTitle: 'Advogada',
+}));
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
@@ -74,6 +83,7 @@ const jsonLd = {
     'BPC/LOAS',
     'Revisão de benefício do INSS',
   ],
+  ...(advogadas.length > 0 && { employee: advogadas }),
 };
 
 const temaScript = `(function(){var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('tema')}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.dataset.theme=t})()`;

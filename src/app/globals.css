@@ -122,13 +122,21 @@
   .grid3 p{font-size:15px;color:rgba(251,247,241,.72);font-weight:300}
 
   /* equipe */
-  .equipe{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-  .fotos{display:flex;gap:20px}
-  .fotos img{flex:1;min-width:0;object-fit:cover;border-radius:18px;height:520px}
-  .fotos img:last-child{height:460px;margin-top:60px}
-  .parallax .fotos img:first-child{translate:0 calc(var(--p,0) * 20px)}
-  .parallax .fotos img:last-child{translate:0 calc(var(--p,0) * -20px)}
-  .equipe-txt{display:flex;flex-direction:column;gap:20px;max-width:540px}
+  .equipe-intro{display:grid;grid-template-columns:1.15fr 1fr;gap:72px;align-items:center;margin-bottom:64px}
+  .equipe-txt{display:flex;flex-direction:column;gap:20px;max-width:580px}
+  .equipe-foto{position:relative;aspect-ratio:5/4;border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -28px rgba(42,33,29,.35)}
+  .equipe-foto img{object-fit:cover;object-position:center 75%}
+  .advogadas{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .adv-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);transition:translate .3s ease,box-shadow .3s ease,border-color .3s ease}
+  .adv-foto{position:relative;min-height:360px;overflow:hidden;background:var(--bg2)}
+  .adv-foto img{object-fit:cover;object-position:center top;transition:transform .6s ease}
+  .adv-corpo{display:flex;flex-direction:column;gap:12px;padding:clamp(24px,2.6vw,36px)}
+  .adv-corpo h3{font-size:22px;line-height:1.25}
+  .adv-oab{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .adv-formacao{list-style:none;padding:12px 0 0;margin:4px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+  .adv-formacao li{position:relative;padding-left:16px;font-size:14px;color:var(--txt-strong)}
+  .adv-formacao li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .adv-corpo .lead{font-size:15px}
 
   /* faq */
   .faq{background:var(--bg2);border-top:1px solid var(--line)}
@@ -245,7 +253,6 @@
     html{scroll-behavior:auto}
     .js .reveal,.js .reveal-stagger>*,.js .hero-txt .hero-tag span:first-child,.js .hero-selo{opacity:1;transform:none;translate:none}
     .hero-slide img{transform:none}
-    .parallax .fotos img{translate:none!important}
     .pilares-marquee{-webkit-mask-image:none;mask-image:none}
     .pilares-track{width:auto}
     .pilares-grupo{flex-wrap:wrap;row-gap:24px;padding:0 var(--pad)}
@@ -308,7 +315,8 @@
 
   /* hovers (somente dispositivos com mouse) */
   @media (hover:hover){
-    .card:hover,.post-card:hover{translate:0 -4px;box-shadow:0 22px 44px -28px rgba(36,28,24,.4);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
+    .adv-card:hover .adv-foto img{transform:scale(1.04)}
+    .card:hover,.post-card:hover,.adv-card:hover{translate:0 -4px;box-shadow:0 22px 44px -28px rgba(36,28,24,.4);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
     .ct:hover{translate:0 -4px;background:var(--surface);box-shadow:0 22px 44px -28px rgba(36,28,24,.4)}
     .card:hover .ico,.ct:hover .ico{background:var(--wine)}
     .card:hover .ico svg,.ct:hover .ico svg{stroke:var(--cream)}
@@ -318,8 +326,9 @@
   /* ===== Tablet e notebook pequeno ===== */
   @media (max-width:1180px){
     .hero{gap:48px}
-    .equipe{gap:48px}
-    .fotos img{height:440px}.fotos img:last-child{height:390px}
+    .equipe-intro{gap:48px}
+    .adv-card{grid-template-columns:1fr}
+    .adv-foto{min-height:0;aspect-ratio:4/3}
   }
 
   /* ===== Tablet / mobile: menu vira gaveta ===== */
@@ -333,7 +342,7 @@
     .menu a:not(.btn)::after{display:none}
     .menu-cta{display:inline-flex;margin-top:28px}
     .burger{position:relative;z-index:80}
-    .hero,.equipe,.cards{grid-template-columns:1fr}
+    .hero,.equipe-intro,.cards{grid-template-columns:1fr}
     .hero{gap:44px;padding-top:56px;padding-bottom:64px}
     .hero-txt{max-width:none}
     .hero-media{max-width:520px}
@@ -343,7 +352,7 @@
     .contatos .ct:last-child{grid-column:1/-1}
     .cta .wrap{flex-direction:column;align-items:flex-start}
     .equipe-txt{max-width:none}
-    .fotos img{height:420px}.fotos img:last-child{height:370px;margin-top:40px}
+    .equipe-intro{gap:40px;margin-bottom:48px}
     .footer-grid{grid-template-columns:1fr 1fr}
     .contato-grid{grid-template-columns:1fr}
     .mapa-frame{min-height:360px}
@@ -371,8 +380,8 @@
     .contatos{grid-template-columns:1fr}
     .ct{padding:26px}
     .ct a,.ct address{font-size:18px}
-    .fotos{gap:12px}
-    .fotos img{height:280px}.fotos img:last-child{height:245px;margin-top:35px}
+    .advogadas{grid-template-columns:1fr;gap:24px}
+    .adv-foto{aspect-ratio:4/5}
     details{padding:0 18px}
     summary{font-size:17px;padding:18px 30px 18px 0}
     summary::after{top:22px}
