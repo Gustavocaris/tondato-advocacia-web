@@ -1,4 +1,5 @@
 import { SITE } from '@/lib/site';
+import FormContato from './FormContato';
 import { IconeConversa, IconeEmail, IconeLocal } from './icons';
 import Reveal from './Reveal';
 
@@ -38,9 +39,27 @@ export default function Contato() {
               <br />
               {SITE.endereco.cidade}/{SITE.endereco.uf}
             </address>
-            <a className="mapa" href={SITE.endereco.mapaUrl} target="_blank" rel="noopener">
-              Ver no mapa <span aria-hidden="true">→</span>
+            <a className="mapa" href="#mapa">
+              Ver no mapa <span aria-hidden="true">↓</span>
             </a>
+          </div>
+        </Reveal>
+        <Reveal className="contato-grid">
+          <FormContato />
+          <div className="mapa-card" id="mapa">
+            <div className="mapa-frame">
+              <iframe
+                src={SITE.endereco.mapaEmbedUrl}
+                title={`Mapa: ${SITE.endereco.rua}, ${SITE.endereco.cidade}/${SITE.endereco.uf}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+            <p className="mapa-legenda">
+              <IconeLocal width={18} height={18} />
+              {SITE.endereco.rua} · {SITE.endereco.cidade}/{SITE.endereco.uf}
+            </p>
           </div>
         </Reveal>
       </div>

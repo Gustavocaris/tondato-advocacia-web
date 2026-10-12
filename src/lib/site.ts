@@ -16,6 +16,8 @@ export const SITE = {
     uf: 'PR',
     mapaUrl:
       'https://www.google.com/maps/search/?api=1&query=Rua+Bar%C3%A3o+do+Rio+Branco%2C+2242%2C+Toledo+PR',
+    mapaEmbedUrl:
+      'https://www.google.com/maps?q=Rua+Bar%C3%A3o+do+Rio+Branco%2C+2242%2C+Toledo+-+PR&z=16&output=embed',
   },
 } as const;
 

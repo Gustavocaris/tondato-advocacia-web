@@ -56,6 +56,7 @@ const jsonLd = {
   image: `${SITE.url}/img/og-tondato.jpg`,
   logo: `${SITE.url}/img/logo-tondato.png`,
   telephone: SITE.telefone,
+  hasMap: SITE.endereco.mapaUrl,
   email: SITE.email,
   address: {
     '@type': 'PostalAddress',

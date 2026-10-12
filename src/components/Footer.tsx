@@ -33,9 +33,7 @@ export default function Footer() {
             <br />
             {SITE.endereco.cidade}/{SITE.endereco.uf}
           </address>
-          <a href={SITE.endereco.mapaUrl} target="_blank" rel="noopener">
-            Ver no mapa
-          </a>
+          <Link href="/#mapa">Ver no mapa</Link>
         </div>
       </div>
       <div className="footer-base">
