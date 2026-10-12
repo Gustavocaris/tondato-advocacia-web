@@ -7,6 +7,8 @@ export const SITE = {
   whatsappUrl: 'https://wa.me/5545999561146',
   whatsappExibicao: '(45) 99956-1146',
   telefone: '+55 45 99956-1146',
+  /** Nº de inscrição da sociedade na OAB/PR (art. 44 do Código de Ética). Exibido no rodapé quando preenchido. */
+  oab: null as string | null,
   email: 'tondatoadvocacia@gmail.com',
   endereco: {
     rua: 'Rua Barão do Rio Branco, 2242',
