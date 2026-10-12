@@ -10,6 +10,8 @@ export const POSTS_MOCK: Post[] = [
       'Entenda a diferença entre o recurso administrativo e a ação judicial, os prazos envolvidos e quais documentos reunir antes de recorrer.',
     data: '2026-09-18',
     capaUrl: '/img/reuniao-tondato.jpg',
+    capaAlt: 'Advogadas da Tondato Advogados Associados analisando documentos em reunião',
+    palavrasChave: ['INSS negou benefício', 'recurso administrativo INSS', 'benefício indeferido', 'advogado previdenciário Toledo'],
     categoria: 'Previdenciário',
   },
   {
@@ -20,6 +22,8 @@ export const POSTS_MOCK: Post[] = [
       'Quem trabalhou parte da vida no campo e parte na cidade pode usar os dois períodos para completar a carência. Veja como funciona.',
     data: '2026-08-27',
     capaUrl: '/img/socias-tondato.jpg',
+    capaAlt: 'Advogadas sócias da Tondato Advogados Associados',
+    palavrasChave: ['aposentadoria híbrida', 'tempo rural e urbano', 'carência INSS', 'aposentadoria por idade'],
     categoria: 'Previdenciário',
   },
   {
@@ -30,6 +34,8 @@ export const POSTS_MOCK: Post[] = [
       'O benefício assistencial não exige contribuição ao INSS. Conheça os requisitos de idade, deficiência e renda familiar.',
     data: '2026-08-05',
     capaUrl: '/img/equipe-tondato.jpg',
+    capaAlt: 'Advogadas da Tondato Advogados Associados',
+    palavrasChave: ['BPC/LOAS', 'benefício assistencial', 'requisitos BPC', 'LOAS idoso e deficiente'],
     categoria: 'Previdenciário',
   },
   {
@@ -40,6 +46,9 @@ export const POSTS_MOCK: Post[] = [
       'São 2 anos para entrar com a ação e até 5 anos de direitos que podem ser cobrados. Saiba como os prazos são contados.',
     data: '2026-07-14',
     capaUrl: '/img/og-tondato.jpg',
+    capaAlt: 'Logotipo da Tondato Advogados Associados',
+    palavrasChave: ['prazo ação trabalhista', 'prescrição trabalhista', 'direitos do trabalhador', 'advogado trabalhista Toledo'],
+    seoTitulo: 'Prazo para ação trabalhista: como os prazos são contados',
     categoria: 'Trabalhista',
   },
 ];

@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: 'Blog',
   description:
     'Artigos da Tondato Advogados Associados sobre Direito Previdenciário, INSS e Direito Trabalhista, em linguagem simples.',
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    type: 'website',
+    url: '/blog',
+    title: 'Blog | Tondato Advogados Associados',
+    description: 'Artigos sobre Direito Previdenciário, INSS e Direito Trabalhista, em linguagem simples.',
+  },
 };
 
 export default async function BlogPage() {

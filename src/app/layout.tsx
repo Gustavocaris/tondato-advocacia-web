@@ -3,6 +3,7 @@ import { Fraunces, Work_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import JsonLd from '@/components/JsonLd';
 import ToTop from '@/components/ToTop';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import { EQUIPE } from '@/data/equipe';
@@ -31,7 +32,23 @@ export const metadata: Metadata = {
   },
   description:
     'Tondato Advogados Associados, em Toledo/PR: advocacia em Direito Previdenciário (aposentadorias, auxílio-doença, BPC/LOAS, revisões e benefícios negados pelo INSS) e Direito Trabalhista.',
-  robots: { index: true, follow: true },
+  keywords: [
+    'advogado previdenciário Toledo',
+    'advogado trabalhista Toledo',
+    'advogada Toledo PR',
+    'aposentadoria',
+    'auxílio-doença',
+    'BPC/LOAS',
+    'revisão de benefício INSS',
+    'benefício negado INSS',
+    'direitos trabalhistas',
+  ],
+  alternates: { canonical: '/' },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
+  formatDetection: { telephone: false },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  }),
   icons: { icon: '/img/favicon.png', apple: '/img/apple-touch-icon.png' },
   openGraph: {
     type: 'website',
@@ -40,8 +57,9 @@ export const metadata: Metadata = {
     title: `${SITE.nome} | Direito Previdenciário e Trabalhista em Toledo/PR`,
     description:
       'Advocacia previdenciária e trabalhista em Toledo/PR. Aposentadorias, auxílio-doença, BPC/LOAS, revisões e direitos do trabalhador.',
-    images: ['/img/og-tondato.jpg'],
+    images: [{ url: '/img/og-tondato.jpg', width: 1200, height: 630, alt: SITE.nome }],
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export const viewport: Viewport = {
@@ -58,6 +76,7 @@ const advogadas = EQUIPE.filter((a) => !temPendencias(a)).map((a) => ({
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
+  '@id': `${SITE.url}/#escritorio`,
   name: SITE.nome,
   description: 'Escritório de advocacia em Direito Previdenciário e Direito Trabalhista em Toledo/PR.',
   url: SITE.url,
@@ -93,7 +112,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* Antes da primeira pintura: ativa as animações de entrada (.js) e aplica o tema salvo ou o do sistema. */}
         <script dangerouslySetInnerHTML={{ __html: temaScript }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <JsonLd dados={jsonLd} />
       </head>
       <body>
         <Header />

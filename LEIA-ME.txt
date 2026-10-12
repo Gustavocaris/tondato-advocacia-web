@@ -18,7 +18,9 @@ Estrutura
   src/data/posts.ts     Artigos de exemplo
   src/types/blog.ts     Formato de um artigo
   public/img/           Logo, fotos, ícone da aba e imagem de compartilhamento
-  public/robots.txt     Libera o site para o Google
+  src/app/sitemap.ts    Gera o /sitemap.xml
+  src/app/robots.ts     Gera o /robots.txt
+  src/lib/seo.ts        Regras de SEO dos artigos (avisos no build)
 
 Pontos de quebra (responsividade)
   acima de 1180px   desktop
@@ -61,6 +63,32 @@ Formulário de contato (envio de e-mail)
        Sem domínio verificado, o Resend só entrega ao e-mail dono da conta.
   Sem a chave, o formulário aparece normalmente, mas avisa que o envio
   está indisponível e sugere o WhatsApp.
+
+SEO (aparecer no Google)
+  O site já gera automaticamente:
+    - /sitemap.xml   lista de páginas e artigos para o Google (novos artigos
+                     entram sozinhos)
+    - /robots.txt    libera o site e informa o sitemap
+    - título, descrição, endereço canônico e prévia para redes sociais em
+      cada página; dados estruturados do escritório e de cada artigo
+  Ao criar um artigo (src/data/posts.ts; depois, no Sanity), preencha:
+    palavrasChave  lista de termos; o PRIMEIRO é o principal e deve aparecer
+                   no título, no endereço (slug) ou no resumo
+    capaAlt        descrição da imagem de capa
+    seoTitulo      opcional; título para o Google (até 60 caracteres)
+    seoDescricao   opcional; descrição para o Google (70 a 160 caracteres)
+  Se algo estiver fora do ideal, o "npm run build" mostra um aviso [seo].
+  Obs.: o Google não usa a meta tag de palavras-chave para ranquear; o que
+  conta é o termo estar no título, no endereço e no texto do artigo.
+
+  Google Search Console (fazer uma vez, após publicar):
+    1. Acesse search.google.com/search-console e adicione o domínio do site.
+    2. Escolha verificar por "tag HTML", copie só o código do content="..."
+       e defina NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION na Vercel/Netlify.
+       Publique de novo e clique em Verificar.
+    3. Em "Sitemaps", envie: sitemap.xml
+  Também recomendado: manter o Perfil da Empresa no Google atualizado
+  (pesa muito nas buscas locais, como "advogado previdenciário Toledo").
 
 Integração com o Sanity.io (próximo passo)
   Trocar o conteúdo das funções em src/lib/blog.ts por consultas GROQ

@@ -1,5 +1,6 @@
 import { POSTS_MOCK } from '@/data/posts';
 import type { Post } from '@/types/blog';
+import { verificarSeoPost } from './seo';
 
 /*
  * Camada de acesso aos posts do blog.
@@ -15,11 +16,28 @@ import type { Post } from '@/types/blog';
  *     resumo,
  *     "data": publishedAt,
  *     "capaUrl": capa.asset->url,
- *     categoria
+ *     "capaAlt": capa.alt,
+ *     categoria,
+ *     palavrasChave,
+ *     seoTitulo,
+ *     seoDescricao,
+ *     "atualizadoEm": _updatedAt
  *   }
  */
 
+let seoVerificado = false;
+
+/** Avisa no build de produção (uma vez) sobre artigos com SEO incompleto. */
+function avisarSeo(posts: Post[]) {
+  if (seoVerificado || process.env.NODE_ENV !== 'production') return;
+  seoVerificado = true;
+  for (const post of posts) {
+    for (const aviso of verificarSeoPost(post)) console.warn(`[seo] /blog/${post.slug}: ${aviso}`);
+  }
+}
+
 export async function getPosts(limite?: number): Promise<Post[]> {
+  avisarSeo(POSTS_MOCK);
   const ordenados = [...POSTS_MOCK].sort((a, b) => b.data.localeCompare(a.data));
   return limite ? ordenados.slice(0, limite) : ordenados;
 }

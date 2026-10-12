@@ -49,6 +49,14 @@ All styles are in one file, `src/app/globals.css` — plain CSS with no Tailwind
 
 `FormContato` (client, `useActionState`) → `enviarContato` server action. It validates server-side, drops honeypot submissions (`site` field), and posts to the Resend REST API with `fetch` (no SDK). Without `RESEND_API_KEY` it returns a friendly "unavailable, use WhatsApp" error instead of throwing.
 
+### SEO
+
+- Global metadata (title template, keywords, canonical, Open Graph/Twitter, optional Search Console verification via `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`) and the `LegalService` JSON-LD (`@id` `${SITE.url}/#escritorio`) live in `layout.tsx`. Every page sets `alternates.canonical`.
+- `src/app/sitemap.ts` and `src/app/robots.ts` generate `/sitemap.xml` and `/robots.txt` from `getPosts()`; there is no static robots file.
+- Post pages emit `BlogPosting` + `BreadcrumbList` JSON-LD through `components/JsonLd.tsx` and use `seoTitulo()`/`seoDescricao()` from `src/lib/seo.ts` (fallback to `titulo`/`resumo`).
+- Every post needs `palavrasChave` (first = primary) and `capaAlt`. `verificarSeoPost()` makes the production build warn when the primary keyword is missing from title/slug/summary, the title exceeds 60 chars, the description is outside 70–160 chars, or `capaAlt` is empty. Keep mock posts warning-free.
+- All absolute URLs come from `SITE.url` (`NEXT_PUBLIC_SITE_URL`); it must be the final domain in production.
+
 ## Domain constraints
 
 - Lawyer bios and copy must follow OAB rules (Provimento 205/2021): informative tone, no self-promotion, no promises of results.
