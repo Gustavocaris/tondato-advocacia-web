@@ -1,0 +1,32 @@
+SITE TONDATO ADVOGADOS ASSOCIADOS
+=================================
+
+Estrutura
+  index.html      Conteúdo do site (textos, seções, links)
+  css/style.css   Visual e responsividade (desktop, tablet e celular)
+  js/main.js      Interações: menu mobile, destaque do menu, animações,
+                  perguntas frequentes e botão "voltar ao topo"
+  img/            Logo, fotos, ícone da aba e imagem de compartilhamento
+  robots.txt      Libera o site para o Google
+
+Pontos de quebra (responsividade)
+  acima de 1180px   desktop
+  até 1180px        notebook pequeno
+  até 980px         tablet (menu vira botão ☰ com gaveta lateral)
+  até 600px         celular
+
+Como ver no computador
+  Dê dois cliques em index.html.
+
+Como publicar (gratuito)
+  1. Acesse app.netlify.com/drop
+  2. Arraste esta pasta inteira para a página
+  3. Ligue o domínio (ex.: tondato.adv.br) em Domain management
+
+Como editar textos
+  Abra index.html em um editor de texto (Bloco de Notas, VS Code)
+  e altere o texto entre as marcações. Salve e publique novamente.
+
+Pendente
+  Incluir o número de inscrição da sociedade na OAB/PR no rodapé
+  (exigência do art. 44 do Código de Ética da OAB).
