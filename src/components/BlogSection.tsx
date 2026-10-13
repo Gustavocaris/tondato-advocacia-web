@@ -9,9 +9,16 @@ interface BlogSectionProps {
   verTodos?: boolean;
   /** Título principal da página (h1) ou de seção (h2). */
   tituloComoH1?: boolean;
+  /** Exibe o primeiro post como card largo de destaque. */
+  destacarPrimeiro?: boolean;
 }
 
-export default function BlogSection({ posts, verTodos = false, tituloComoH1 = false }: BlogSectionProps) {
+export default function BlogSection({
+  posts,
+  verTodos = false,
+  tituloComoH1 = false,
+  destacarPrimeiro = false,
+}: BlogSectionProps) {
   const Titulo = tituloComoH1 ? 'h1' : 'h2';
 
   return (
@@ -25,18 +32,21 @@ export default function BlogSection({ posts, verTodos = false, tituloComoH1 = fa
           </p>
         </Reveal>
         {posts.length > 0 ? (
-          <div className="posts">
-            {posts.map((post) => (
-              <BlogCard key={post.id} post={post} />
+          <Reveal className="posts" stagger>
+            {posts.map((post, i) => (
+              <BlogCard key={post.id} post={post} destaque={destacarPrimeiro && i === 0} />
             ))}
-          </div>
+          </Reveal>
         ) : (
           <p className="lead">Em breve, novos artigos por aqui.</p>
         )}
         {verTodos && (
           <div className="blog-acoes">
             <Link className="btn btn-ghost" href="/blog">
-              Ver todos os artigos
+              Ver todos os artigos{' '}
+              <span className="btn-seta" aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         )}

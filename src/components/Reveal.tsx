@@ -5,11 +5,13 @@ import { useEffect, useRef, useState, type ElementType, type ReactNode } from 'r
 interface RevealProps {
   as?: ElementType;
   className?: string;
+  /** Anima os filhos diretos em cascata, em vez do bloco inteiro. */
+  stagger?: boolean;
   children: ReactNode;
 }
 
 /* Animação suave ao aparecer: aplica `.visivel` quando o elemento entra na tela. */
-export default function Reveal({ as: Tag = 'div', className, children }: RevealProps) {
+export default function Reveal({ as: Tag = 'div', className, stagger = false, children }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [visivel, setVisivel] = useState(false);
 
@@ -33,7 +35,7 @@ export default function Reveal({ as: Tag = 'div', className, children }: RevealP
     return () => obs.disconnect();
   }, []);
 
-  const classes = ['reveal', className, visivel && 'visivel'].filter(Boolean).join(' ');
+  const classes = ['reveal', stagger && 'reveal-stagger', className, visivel && 'visivel'].filter(Boolean).join(' ');
   return (
     <Tag ref={ref} className={classes}>
       {children}

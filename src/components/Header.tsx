@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MENU_LINKS, SITE } from '@/lib/site';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const pathname = usePathname();
@@ -97,9 +98,12 @@ export default function Header() {
               Falar no WhatsApp
             </a>
           </nav>
-          <a className="btn btn-wine nav-cta" href={SITE.whatsappUrl} target="_blank" rel="noopener">
-            WhatsApp
-          </a>
+          <div className="nav-acoes">
+            <ThemeToggle />
+            <a className="btn btn-wine nav-cta" href={SITE.whatsappUrl} target="_blank" rel="noopener">
+              WhatsApp
+            </a>
+          </div>
           <button
             ref={burgerRef}
             className="burger"
