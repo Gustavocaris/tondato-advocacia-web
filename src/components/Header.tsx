@@ -23,11 +23,11 @@ export default function Header() {
     if (aberto) {
       setOverlayVisivel(true);
       const raf = requestAnimationFrame(() => setOverlayOn(true));
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       return () => cancelAnimationFrame(raf);
     }
     setOverlayOn(false);
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     const t = setTimeout(() => setOverlayVisivel(false), 300);
     return () => clearTimeout(t);
   }, [aberto]);
