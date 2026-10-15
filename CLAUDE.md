@@ -19,7 +19,7 @@ npm run start      # serve the production build
 npm run typecheck  # tsc --noEmit
 ```
 
-There is no linter and no test suite. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
+There is no linter and no test suite. GitHub Actions CI (`.github/workflows/ci.yml`, explained in `docs/CI.md`) runs `typecheck` + `build` on Node 20 and 22 for every push and for PRs to `staging`/`main`. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
 
 Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
 
