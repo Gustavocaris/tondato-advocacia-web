@@ -5,7 +5,7 @@ const PILARES = [
   { titulo: 'Acompanhamento próximo', texto: 'Você sabe em que fase seu caso está' },
   { titulo: 'Comunicação clara', texto: 'Cada etapa explicada em linguagem simples' },
   { titulo: 'Atendimento pelo WhatsApp', texto: 'Fale com o escritório de onde estiver' },
-  { titulo: 'Toledo e região', texto: 'Atendimento presencial no escritório' },
+  { titulo: 'Todo o Brasil', texto: 'Presencial em Toledo/PR e online no país inteiro' },
 ];
 
 /* Faixa de diferenciais em loop contínuo; o segundo grupo é cópia visual para emendar o movimento. */

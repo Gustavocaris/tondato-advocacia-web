@@ -27,15 +27,17 @@ const workSans = Work_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `Advogado Previdenciário e Trabalhista em Toledo/PR | ${SITE.nome}`,
+    default: `Advogado Previdenciário e Trabalhista em Toledo/PR e Online | ${SITE.nome}`,
     template: `%s | ${SITE.nome}`,
   },
   description:
-    'Tondato Advogados Associados, em Toledo/PR: advocacia em Direito Previdenciário (aposentadorias, auxílio-doença, BPC/LOAS, revisões e benefícios negados pelo INSS) e Direito Trabalhista.',
+    'Tondato Advogados Associados: advocacia em Direito Previdenciário (aposentadorias, auxílio-doença, BPC/LOAS, revisões e benefícios negados pelo INSS) e Direito Trabalhista, com atendimento presencial em Toledo/PR e online em todo o Brasil.',
   keywords: [
     'advogado previdenciário Toledo',
     'advogado trabalhista Toledo',
     'advogada Toledo PR',
+    'advogado previdenciário online',
+    'advogado trabalhista online',
     'aposentadoria',
     'auxílio-doença',
     'BPC/LOAS',
@@ -54,9 +56,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     siteName: SITE.nome,
-    title: `${SITE.nome} | Direito Previdenciário e Trabalhista em Toledo/PR`,
+    title: `${SITE.nome} | Direito Previdenciário e Trabalhista em Toledo/PR e todo o Brasil`,
     description:
-      'Advocacia previdenciária e trabalhista em Toledo/PR. Aposentadorias, auxílio-doença, BPC/LOAS, revisões e direitos do trabalhador.',
+      'Advocacia previdenciária e trabalhista com atendimento presencial em Toledo/PR e online em todo o Brasil. Aposentadorias, auxílio-doença, BPC/LOAS, revisões e direitos do trabalhador.',
     images: [{ url: '/img/og-tondato.jpg', width: 1200, height: 630, alt: SITE.nome }],
   },
   twitter: { card: 'summary_large_image' },
@@ -78,7 +80,8 @@ const jsonLd = {
   '@type': 'LegalService',
   '@id': `${SITE.url}/#escritorio`,
   name: SITE.nome,
-  description: 'Escritório de advocacia em Direito Previdenciário e Direito Trabalhista em Toledo/PR.',
+  description:
+    'Escritório de advocacia em Direito Previdenciário e Direito Trabalhista sediado em Toledo/PR, com atendimento presencial e online em todo o Brasil.',
   url: SITE.url,
   image: `${SITE.url}/img/og-tondato.jpg`,
   logo: `${SITE.url}/img/logo-tondato.png`,
@@ -92,7 +95,7 @@ const jsonLd = {
     addressRegion: SITE.endereco.uf,
     addressCountry: 'BR',
   },
-  areaServed: ['Toledo', 'Oeste do Paraná'],
+  areaServed: [{ '@type': 'Country', name: 'Brasil' }, 'Toledo', 'Oeste do Paraná'],
   knowsAbout: [
     'Direito Previdenciário',
     'Direito Trabalhista',
