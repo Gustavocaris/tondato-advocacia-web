@@ -8,7 +8,7 @@ Marketing site for **Tondato Advogados Associados**, a law firm in Toledo/PR (Br
 
 Site copy, comments and identifiers are in **Portuguese** (`getPosts`, `temPendencias`, `aberto`, `.rolou`…) — keep that convention. **Git commit messages are in English** (conventional commits).
 
-Git workflow: one branch per change, created from an up-to-date `main`; get its PR merged before starting the next (no stacked branches). Never rewrite history that has already been pushed (no filter-branch/rebase + force-push on branches with open PRs) — doing so once caused conflicts across every PR.
+Git workflow: `main` is production (deployed on Vercel) and only receives the final merge from `staging` once the project is finished. `staging` is the homologation branch (Vercel preview) and the base for all work: one branch per change, created from an up-to-date `staging` and merged back into `staging`; get its PR merged before starting the next (no stacked branches). Never rewrite history that has already been pushed (no filter-branch/rebase + force-push on branches with open PRs) — doing so once caused conflicts across every PR.
 
 ## Commands
 
