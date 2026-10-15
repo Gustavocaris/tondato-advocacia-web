@@ -57,10 +57,10 @@ export default function Servicos() {
       <div className="wrap">
         <Reveal className="sec-head">
           <span className="eyebrow">Áreas de Atuação</span>
-          <h2>Direito Previdenciário e Direito Trabalhista em Toledo/PR</h2>
+          <h2>Direito Previdenciário e Direito Trabalhista em Toledo/PR e em todo o Brasil</h2>
           <p className="lead">
             Atuamos de forma dedicada nas duas áreas, defendendo os direitos de quem trabalha e de quem precisa do
-            INSS, em Toledo e região.
+            INSS, presencialmente em Toledo/PR ou online em todo o Brasil.
           </p>
         </Reveal>
         <Reveal className="cards" stagger>

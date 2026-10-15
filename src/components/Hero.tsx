@@ -15,9 +15,10 @@ export default function Hero() {
             Ao seu lado na busca pelo <em>melhor direito</em>.
           </h1>
           <p className="lead">
-            A Tondato Advogados Associados é um escritório de advocacia em Toledo/PR com atuação em Direito
-            Previdenciário e Direito Trabalhista, sempre em busca do melhor direito para o segurado e para o
-            trabalhador, do primeiro atendimento até a conclusão do processo.
+            A Tondato Advogados Associados é um escritório de advocacia sediado em Toledo/PR, com atendimento
+            presencial e atuação nacional de forma 100% online em Direito Previdenciário e Direito Trabalhista.
+            Buscamos sempre o melhor direito para o segurado e para o trabalhador em todo o Brasil, do primeiro
+            atendimento até a conclusão do processo.
           </p>
           <div className="actions">
             <a className="btn btn-wine" href={SITE.whatsappUrl} target="_blank" rel="noopener">
