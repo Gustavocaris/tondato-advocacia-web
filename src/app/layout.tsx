@@ -6,8 +6,7 @@ import Header from '@/components/Header';
 import JsonLd from '@/components/JsonLd';
 import ToTop from '@/components/ToTop';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
-import { EQUIPE } from '@/data/equipe';
-import { temPendencias } from '@/lib/equipe';
+import { getEquipe, temPendencias } from '@/lib/equipe';
 import { SITE } from '@/lib/site';
 import './globals.css';
 
@@ -27,15 +26,17 @@ const workSans = Work_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `Advogado Previdenciário e Trabalhista em Toledo/PR | ${SITE.nome}`,
+    default: `Advogado Previdenciário e Trabalhista em Toledo/PR e Online | ${SITE.nome}`,
     template: `%s | ${SITE.nome}`,
   },
   description:
-    'Tondato Advogados Associados, em Toledo/PR: advocacia em Direito Previdenciário (aposentadorias, auxílio-doença, BPC/LOAS, revisões e benefícios negados pelo INSS) e Direito Trabalhista.',
+    'Tondato Advogados Associados: advocacia em Direito Previdenciário (aposentadorias, auxílio-doença, BPC/LOAS, revisões e benefícios negados pelo INSS) e Direito Trabalhista, com atendimento presencial em Toledo/PR e online em todo o Brasil.',
   keywords: [
     'advogado previdenciário Toledo',
     'advogado trabalhista Toledo',
     'advogada Toledo PR',
+    'advogado previdenciário online',
+    'advogado trabalhista online',
     'aposentadoria',
     'auxílio-doença',
     'BPC/LOAS',
@@ -54,9 +55,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     siteName: SITE.nome,
-    title: `${SITE.nome} | Direito Previdenciário e Trabalhista em Toledo/PR`,
+    title: `${SITE.nome} | Direito Previdenciário e Trabalhista em Toledo/PR e todo o Brasil`,
     description:
-      'Advocacia previdenciária e trabalhista em Toledo/PR. Aposentadorias, auxílio-doença, BPC/LOAS, revisões e direitos do trabalhador.',
+      'Advocacia previdenciária e trabalhista com atendimento presencial em Toledo/PR e online em todo o Brasil. Aposentadorias, auxílio-doença, BPC/LOAS, revisões e direitos do trabalhador.',
     images: [{ url: '/img/og-tondato.jpg', width: 1200, height: 630, alt: SITE.nome }],
   },
   twitter: { card: 'summary_large_image' },
@@ -66,53 +67,56 @@ export const viewport: Viewport = {
   themeColor: '#8F092A',
 };
 
-// Só entram no JSON-LD as advogadas com dados reais preenchidos.
-const advogadas = EQUIPE.filter((a) => !temPendencias(a)).map((a) => ({
-  '@type': 'Person',
-  name: a.nome,
-  jobTitle: 'Advogada',
-}));
+/** JSON-LD do escritório. Só entram as advogadas com dados reais preenchidos. */
+async function montarJsonLd() {
+  const advogadas = (await getEquipe()).filter((a) => !temPendencias(a)).map((a) => ({
+    '@type': 'Person',
+    name: a.nome,
+    jobTitle: 'Advogada',
+  }));
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  '@id': `${SITE.url}/#escritorio`,
-  name: SITE.nome,
-  description: 'Escritório de advocacia em Direito Previdenciário e Direito Trabalhista em Toledo/PR.',
-  url: SITE.url,
-  image: `${SITE.url}/img/og-tondato.jpg`,
-  logo: `${SITE.url}/img/logo-tondato.png`,
-  telephone: SITE.telefone,
-  hasMap: SITE.endereco.mapaUrl,
-  email: SITE.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: SITE.endereco.rua,
-    addressLocality: SITE.endereco.cidade,
-    addressRegion: SITE.endereco.uf,
-    addressCountry: 'BR',
-  },
-  areaServed: ['Toledo', 'Oeste do Paraná'],
-  knowsAbout: [
-    'Direito Previdenciário',
-    'Direito Trabalhista',
-    'Aposentadoria',
-    'Auxílio-doença',
-    'BPC/LOAS',
-    'Revisão de benefício do INSS',
-  ],
-  ...(advogadas.length > 0 && { employee: advogadas }),
-};
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LegalService',
+    '@id': `${SITE.url}/#escritorio`,
+    name: SITE.nome,
+    description:
+      'Escritório de advocacia em Direito Previdenciário e Direito Trabalhista sediado em Toledo/PR, com atendimento presencial e online em todo o Brasil.',
+    url: SITE.url,
+    image: `${SITE.url}/img/og-tondato.jpg`,
+    logo: `${SITE.url}/img/logo-tondato.png`,
+    telephone: SITE.telefone,
+    hasMap: SITE.endereco.mapaUrl,
+    email: SITE.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: SITE.endereco.rua,
+      addressLocality: SITE.endereco.cidade,
+      addressRegion: SITE.endereco.uf,
+      addressCountry: 'BR',
+    },
+    areaServed: [{ '@type': 'Country', name: 'Brasil' }, 'Toledo', 'Oeste do Paraná'],
+    knowsAbout: [
+      'Direito Previdenciário',
+      'Direito Trabalhista',
+      'Aposentadoria',
+      'Auxílio-doença',
+      'BPC/LOAS',
+      'Revisão de benefício do INSS',
+    ],
+    ...(advogadas.length > 0 && { employee: advogadas }),
+  };
+}
 
 const temaScript = `(function(){var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('tema')}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.dataset.theme=t})()`;
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${workSans.variable}`} suppressHydrationWarning>
       <head>
         {/* Antes da primeira pintura: ativa as animações de entrada (.js) e aplica o tema salvo ou o do sistema. */}
         <script dangerouslySetInnerHTML={{ __html: temaScript }} />
-        <JsonLd dados={jsonLd} />
+        <JsonLd dados={await montarJsonLd()} />
       </head>
       <body>
         <Header />

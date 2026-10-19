@@ -8,7 +8,7 @@ Marketing site for **Tondato Advogados Associados**, a law firm in Toledo/PR (Br
 
 Site copy, comments and identifiers are in **Portuguese** (`getPosts`, `temPendencias`, `aberto`, `.rolou`…) — keep that convention. **Git commit messages are in English** (conventional commits).
 
-Git workflow: one branch per change, created from an up-to-date `main`; get its PR merged before starting the next (no stacked branches). Never rewrite history that has already been pushed (no filter-branch/rebase + force-push on branches with open PRs) — doing so once caused conflicts across every PR.
+Git workflow: `main` is production (deployed on Vercel) and only receives the final merge from `staging` once the project is finished. `staging` is the homologation branch (Vercel preview) and the base for all work: one branch per change, created from an up-to-date `staging` and merged back into `staging`; get its PR merged before starting the next (no stacked branches). Never rewrite history that has already been pushed (no filter-branch/rebase + force-push on branches with open PRs) — doing so once caused conflicts across every PR.
 
 ## Commands
 
@@ -19,19 +19,22 @@ npm run start      # serve the production build
 npm run typecheck  # tsc --noEmit
 ```
 
-There is no linter and no test suite. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
+There is no linter and no test suite. GitHub Actions CI (`.github/workflows/ci.yml`, explained in `docs/CI.md`) runs `typecheck` + `build` on Node 20 and 22, plus a `tsc` of `studio/`, for every push and for PRs to `staging`/`main`. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
 
-Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
+Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` / `SANITY_REVALIDATE_SECRET` for content, `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
 
 ## Architecture
 
-- **`src/app/`** — `layout.tsx` holds metadata, the `LegalService` JSON-LD, fonts (`next/font`: Fraunces + Work Sans exposed as `--font-fraunces` / `--font-work-sans`), the global Header/Footer, and an inline pre-paint script. `page.tsx` composes the home sections. `blog/` and `blog/[slug]/` (SSG via `generateStaticParams`). `actions/contato.ts` is the contact-form server action.
+- **`src/app/`** — `layout.tsx` holds metadata, the `LegalService` JSON-LD (team from `getEquipe()`), fonts (`next/font`: Fraunces + Work Sans exposed as `--font-fraunces` / `--font-work-sans`), the global Header/Footer, and an inline pre-paint script. `page.tsx` composes the home sections. `blog/` and `blog/[slug]/` (SSG via `generateStaticParams`). `actions/contato.ts` is the contact-form server action; `api/revalidate/` is the Sanity webhook.
 - **`src/components/`** — one component per page section. Server components by default; only interactive pieces are client components (`Header`, `Duvidas`, `FormContato`, `ThemeToggle`, `Reveal`, `ToTop`, `ProgressoLeitura`).
 - **`src/lib/site.ts`** — single source for contact data (WhatsApp, email, address, map URLs), menu links and `SITE.oab`. Don't hardcode these elsewhere.
 
-### Content layer (prepared for Sanity.io)
+### Content layer (Sanity.io)
 
-Content lives in `src/data/*.ts`, typed by `src/types/*.ts`, and is **only** read through async functions in `src/lib/` (`getPosts`, `getPostBySlug`, `getEquipe`). Components never import `src/data` directly (the layout's JSON-LD is the one exception). The Sanity integration is meant to replace only the bodies of the `src/lib` functions; types mirror the future Sanity schemas (a sample GROQ projection is in `src/lib/blog.ts`).
+Content is **only** read through async functions in `src/lib/` (`getPosts`, `getPostBySlug`, `getEquipe`); components never import `src/data` directly. **Only blog posts live in Sanity** — the client publishes articles and nothing else. When `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, `getPosts`/`getPostBySlug` query Sanity through `buscar()` in `src/lib/sanity.ts` (GROQ projections rename fields to match `src/types/blog.ts`); otherwise they fall back to `src/data/posts.ts`, so CI and local dev run without env vars. The team (`src/data/equipe.ts`), OAB data and everything in `src/lib/site.ts` are maintained by us in code; don't move them to Sanity. The post body (`corpo`, Portable Text) is rendered by `components/CorpoArtigo.tsx`.
+
+- **Studio** lives in `studio/` (own `package.json`, excluded from the root `tsconfig`; project `2ousxa3t`, dataset `production`, which must stay public-read). The only schema is `post` (`studio/schemaTypes/post.tsx`, mirrors `src/types/blog.ts`; body marks: strong, em, underline, highlight, link); `studio/schemaTypes/seo.ts` duplicates the rules of `src/lib/seo.ts` as Studio warnings, so change both together. `studio/scripts/importar-mocks.ts` imports the mock posts into the dataset (idempotent). See `studio/README.md`.
+- **Caching:** post queries are tagged `post` and revalidate hourly as a fallback (the fetch cache in `.next/cache` survives rebuilds, so never use `revalidate: false`); the Sanity webhook hits `src/app/api/revalidate/route.ts` (signed with `SANITY_REVALIDATE_SECRET`), which calls `revalidateTag`. New slugs render on demand (`dynamicParams`).
 
 `src/data/equipe.ts` contains `[PREENCHER]` placeholders for the lawyers' real names, OAB numbers and bios. Never invent this data. `temPendencias()` makes the production build warn and keeps placeholder entries out of the JSON-LD.
 

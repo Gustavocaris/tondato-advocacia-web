@@ -10,7 +10,10 @@ export default function Contato() {
         <Reveal className="sec-head">
           <span className="eyebrow">Contato</span>
           <h2>Fale com o escritório</h2>
-          <p className="lead">Atendimento pelo WhatsApp, por e-mail ou presencialmente no escritório, em Toledo/PR.</p>
+          <p className="lead">
+            Atendimento pelo WhatsApp, por e-mail ou presencialmente no escritório, em Toledo/PR. Atendemos clientes de
+            todo o Brasil de forma online.
+          </p>
         </Reveal>
         <Reveal className="contatos" stagger>
           <div className="ct">

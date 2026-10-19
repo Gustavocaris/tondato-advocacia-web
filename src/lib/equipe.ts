@@ -1,14 +1,23 @@
 import { EQUIPE } from '@/data/equipe';
 import type { Advogada } from '@/types/equipe';
 
-/* Acesso aos dados da equipe — hoje do arquivo local; na integração, consulta ao Sanity. */
+/* Acesso aos dados da equipe — do arquivo local, editado por nós (não fica no Sanity). */
 
 const PENDENTE = '[PREENCHER]';
 
-export async function getEquipe(): Promise<Advogada[]> {
-  if (process.env.NODE_ENV === 'production' && EQUIPE.some(temPendencias)) {
+let pendenciasVerificadas = false;
+
+/** Avisa no build de produção (uma vez) enquanto houver dados a preencher. */
+function avisarPendencias(equipe: Advogada[]) {
+  if (pendenciasVerificadas || process.env.NODE_ENV !== 'production') return;
+  pendenciasVerificadas = true;
+  if (equipe.some(temPendencias)) {
     console.warn(`[equipe] Há campos "${PENDENTE}" em src/data/equipe.ts — preencha antes de publicar.`);
   }
+}
+
+export async function getEquipe(): Promise<Advogada[]> {
+  avisarPendencias(EQUIPE);
   return EQUIPE;
 }
 

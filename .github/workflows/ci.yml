@@ -1,0 +1,90 @@
+# CI — verifica tipos e build a cada push e pull request. Explicação em docs/CI.md.
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches: [staging, main]
+  workflow_dispatch:
+
+# Um push novo na mesma branch cancela a execução anterior que ainda estiver rodando.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# O job só lê o repositório; não publica nada.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Typecheck e build (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Verificar tipos
+        run: npm run typecheck
+
+      - name: Build de produção
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+
+      # Os avisos [seo] e [equipe] do build viram anotações no GitHub, sem reprovar o CI.
+      - name: Avisos do build
+        if: always()
+        run: |
+          [ -f build.log ] || exit 0
+          avisos=$(grep -E '\[(seo|equipe)\]' build.log | sort -u || true)
+          {
+            echo "### Avisos do build (Node ${{ matrix.node }})"
+            if [ -z "$avisos" ]; then
+              echo "Nenhum aviso. ✅"
+            else
+              echo "$avisos" | sed 's/^/- /'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          [ -z "$avisos" ] || echo "$avisos" | while IFS= read -r linha; do echo "::warning title=Build::$linha"; done
+
+  studio:
+    name: Typecheck do Sanity Studio
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: studio
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Os schemas e o script de importação (que lê src/data) precisam compilar.
+      - name: Verificar tipos
+        run: npx tsc --noEmit
