@@ -21,6 +21,8 @@ const componentes: PortableTextComponents = {
       ) : null,
   },
   marks: {
+    highlight: ({ children }) => <mark>{children}</mark>,
+    underline: ({ children }) => <u>{children}</u>,
     link: ({ value, children }) => {
       const href: string = value?.href ?? '';
       const externo = /^https?:\/\//.test(href);

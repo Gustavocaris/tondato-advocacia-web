@@ -19,10 +19,13 @@ const client = createClient({
   perspective: 'published',
 });
 
+/** Rede de segurança: se um webhook falhar, o conteúdo se atualiza sozinho em até 1 hora. */
+const REVALIDAR_A_CADA = 3600;
+
 /**
  * Consulta GROQ com cache do Next. As tags são invalidadas pelo webhook do Sanity
  * (src/app/api/revalidate/route.ts) quando um documento é publicado.
  */
 export function buscar<T>(query: string, params: QueryParams = {}, tags: string[] = []): Promise<T> {
-  return client.fetch<T>(query, params, { next: { tags, revalidate: false } });
+  return client.fetch<T>(query, params, { next: { tags, revalidate: REVALIDAR_A_CADA } });
 }
