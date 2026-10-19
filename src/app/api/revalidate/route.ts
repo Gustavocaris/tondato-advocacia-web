@@ -1,5 +1,5 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 /*
  * Webhook do Sanity: quando um artigo é publicado, alterado ou removido,
@@ -30,7 +30,5 @@ export async function POST(req: Request) {
   }
 
   revalidateTag(tipo, { expire: 0 });
-  // O /sitemap.xml não é atualizado pela tag em produção; invalida o caminho direto.
-  revalidatePath('/sitemap.xml');
   return Response.json({ revalidado: tipo });
 }
