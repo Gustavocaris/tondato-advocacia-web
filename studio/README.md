@@ -5,7 +5,7 @@ Projeto Sanity `2ousxa3t`, dataset `production`.
 
 ## Para quem edita o conteúdo
 
-Acesse o Studio pelo link enviado (ex.: `https://tondato.sanity.studio`) e entre com a conta convidada.
+Acesse o Studio em **https://tondato.sanity.studio** e entre com a conta convidada.
 
 **Novo artigo:** *Artigo* → **+** → preencha título, clique em **Generate** no endereço, escolha a categoria, escreva o resumo, envie a capa (com a descrição da imagem) e o texto. Na aba **SEO**, informe as palavras-chave (a primeira é a principal). Clique em **Publish**. O site é atualizado em poucos segundos.
 
@@ -20,7 +20,7 @@ Os textos devem seguir o Provimento 205/2021 da OAB: tom informativo, sem autopr
 ```bash
 npm install
 npm run dev       # http://localhost:3333
-npm run deploy    # publica o Studio em <nome>.sanity.studio
+npm run deploy    # publica o Studio em https://tondato.sanity.studio
 ```
 
 Os schemas ficam em `schemaTypes/` e espelham os tipos do site (`../src/types`). As regras de SEO de `schemaTypes/seo.ts` são as mesmas de `../src/lib/seo.ts`; mude as duas juntas.
