@@ -1,12 +1,11 @@
 import {createReadStream} from 'node:fs'
 import {basename, resolve} from 'node:path'
 import {getCliClient} from 'sanity/cli'
-import {EQUIPE} from '../../src/data/equipe'
 import {POSTS_MOCK} from '../../src/data/posts'
 
 /*
- * Importa para o dataset os posts e a equipe de src/data (dados de exemplo do site).
- * Pode rodar mais de uma vez: pula artigos com slug já existente e advogadas com a mesma ordem.
+ * Importa para o dataset os posts de exemplo de src/data/posts.ts.
+ * Pode rodar mais de uma vez: pula artigos com slug já existente.
  *
  *   cd studio && npx sanity exec scripts/importar-mocks.ts --with-user-token
  */
@@ -58,31 +57,7 @@ async function importarPosts() {
   }
 }
 
-async function importarEquipe() {
-  for (const [i, advogada] of EQUIPE.entries()) {
-    const ordem = i + 1
-    const existe = await client.fetch<boolean>(`count(*[_type == "advogada" && ordem == $ordem]) > 0`, {ordem})
-    if (existe) {
-      console.log(`- advogada já existe na posição ${ordem}`)
-      continue
-    }
-    const foto = await enviarImagem(advogada.foto)
-    await client.create({
-      _type: 'advogada',
-      nome: advogada.nome,
-      oab: advogada.oab,
-      formacao: advogada.formacao,
-      bio: advogada.bio,
-      foto: imagem(foto, advogada.fotoAlt),
-      ordem,
-    })
-    console.log(`+ advogada criada na posição ${ordem}`)
-  }
-}
-
-importarPosts()
-  .then(importarEquipe)
-  .catch((erro) => {
-    console.error(erro)
-    process.exit(1)
-  })
+importarPosts().catch((erro) => {
+  console.error(erro)
+  process.exit(1)
+})

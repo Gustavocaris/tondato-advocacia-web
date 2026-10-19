@@ -1,4 +1,3 @@
-import {advogada} from './advogada'
 import {post} from './post'
 
-export const schemaTypes = [post, advogada]
+export const schemaTypes = [post]

@@ -1,8 +1,15 @@
 import {DocumentTextIcon} from '@sanity/icons/DocumentText'
+import {HighlightIcon} from '@sanity/icons/Highlight'
+import type {ReactNode} from 'react'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {type CamposSeo, DESCRICAO_MAX, DESCRICAO_MIN, TITULO_MAX, usaPalavraChave} from './seo'
 
 /* Artigo do blog. Os campos espelham src/types/blog.ts no site. */
+
+/** Mostra o trecho destacado também no editor, como ele aparece no site. */
+function Destaque({children}: {children?: ReactNode}) {
+  return <mark style={{background: 'rgba(143, 9, 42, .16)', color: 'inherit', borderRadius: 3}}>{children}</mark>
+}
 
 export const CATEGORIAS = ['Previdenciário', 'Trabalhista'] as const
 
@@ -112,6 +119,8 @@ export const post = defineType({
             decorators: [
               {title: 'Negrito', value: 'strong'},
               {title: 'Itálico', value: 'em'},
+              {title: 'Sublinhado', value: 'underline'},
+              {title: 'Destaque', value: 'highlight', icon: HighlightIcon, component: Destaque},
             ],
             annotations: [
               defineArrayMember({

@@ -2,12 +2,12 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook';
 import { revalidateTag } from 'next/cache';
 
 /*
- * Webhook do Sanity: quando um artigo ou advogada é publicado, alterado ou removido,
- * invalida o cache das páginas que usam esse tipo de documento.
+ * Webhook do Sanity: quando um artigo é publicado, alterado ou removido,
+ * invalida o cache das páginas que listam ou exibem artigos.
  * Configuração do webhook no painel do Sanity: ver studio/README.md.
  */
 
-const TAGS = ['post', 'advogada'];
+const TAGS = ['post'];
 
 export async function POST(req: Request) {
   const segredo = process.env.SANITY_REVALIDATE_SECRET;
