@@ -3,7 +3,8 @@
 export const SITE = {
   nome: 'Tondato Advogados Associados',
   descricaoCurta: 'Direito Previdenciário e Trabalhista · Toledo/PR e todo o Brasil',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+  // Sem barra no final, para `${SITE.url}/blog` não virar "//blog".
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, ''),
   whatsappUrl: 'https://wa.me/5545999561146',
   whatsappExibicao: '(45) 99956-1146',
   telefone: '+55 45 99956-1146',
