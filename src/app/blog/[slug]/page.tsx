@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import CorpoArtigo from '@/components/CorpoArtigo';
 import CtaBanner from '@/components/CtaBanner';
 import JsonLd from '@/components/JsonLd';
 import ProgressoLeitura from '@/components/ProgressoLeitura';
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   };
 }
 
-/* Página do artigo — o corpo do texto virá do Sanity (Portable Text). */
+/* Página do artigo — o corpo do texto vem do Sanity (Portable Text). */
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostBySlug((await params).slug);
   if (!post) notFound();
@@ -98,7 +99,11 @@ export default async function PostPage({ params }: PostPageProps) {
             <div className="artigo-capa">
               <Image src={post.capaUrl} alt={post.capaAlt} fill sizes="(max-width: 980px) 100vw, 820px" priority />
             </div>
-            <p className="nota">Conteúdo completo do artigo em breve.</p>
+            {post.corpo?.length ? (
+              <CorpoArtigo corpo={post.corpo} />
+            ) : (
+              <p className="nota">Conteúdo completo do artigo em breve.</p>
+            )}
           </article>
         </div>
       </section>

@@ -62,3 +62,29 @@ jobs:
             fi
           } >> "$GITHUB_STEP_SUMMARY"
           [ -z "$avisos" ] || echo "$avisos" | while IFS= read -r linha; do echo "::warning title=Build::$linha"; done
+
+  studio:
+    name: Typecheck do Sanity Studio
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: studio
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Os schemas e o script de importação (que lê src/data) precisam compilar.
+      - name: Verificar tipos
+        run: npx tsc --noEmit

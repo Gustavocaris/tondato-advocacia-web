@@ -88,6 +88,10 @@ Os **passos** (`steps`), em ordem:
 | `npm run build` | Build de produção. O `tee build.log` mostra a saída e também a salva num arquivo. O `set -o pipefail` garante que, se o build falhar, o passo falhe, mesmo com o `tee` no meio. |
 | Avisos do build | Procura `[seo]` e `[equipe]` no `build.log`, escreve no resumo e emite `::warning::`, o comando especial que o GitHub transforma em anotação. Tem `if: always()` para rodar mesmo se o build falhar. |
 
+### Job `studio`
+
+Um segundo job, independente do primeiro, instala as dependências de `studio/` (que tem o próprio `package.json`) e roda `tsc --noEmit` lá dentro. Ele confere os schemas do Sanity e o script de importação, que lê os dados de `src/data`. O `cache-dependency-path` aponta para o `package-lock.json` do studio. O build do site no CI roda **sem** as variáveis do Sanity, então usa os dados de `src/data`.
+
 `uses:` executa uma **action** pronta, publicada por terceiros (aqui, as oficiais do GitHub). `run:` executa comandos de shell.
 
 ## Rodar manualmente
@@ -100,6 +104,7 @@ O mesmo que o CI faz:
 
 ```bash
 npm ci && npm run typecheck && npm run build
+(cd studio && npm ci && npx tsc --noEmit)
 ```
 
 > O `npm ci` apaga e reinstala o `node_modules`. Pare o `npm run dev` antes.

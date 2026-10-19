@@ -19,21 +19,24 @@ npm run start      # serve the production build
 npm run typecheck  # tsc --noEmit
 ```
 
-There is no linter and no test suite. GitHub Actions CI (`.github/workflows/ci.yml`, explained in `docs/CI.md`) runs `typecheck` + `build` on Node 20 and 22 for every push and for PRs to `staging`/`main`. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
+There is no linter and no test suite. GitHub Actions CI (`.github/workflows/ci.yml`, explained in `docs/CI.md`) runs `typecheck` + `build` on Node 20 and 22, plus a `tsc` of `studio/`, for every push and for PRs to `staging`/`main`. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
 
-Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
+Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` / `SANITY_REVALIDATE_SECRET` for content, `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
 
 ## Architecture
 
-- **`src/app/`** — `layout.tsx` holds metadata, the `LegalService` JSON-LD, fonts (`next/font`: Fraunces + Work Sans exposed as `--font-fraunces` / `--font-work-sans`), the global Header/Footer, and an inline pre-paint script. `page.tsx` composes the home sections. `blog/` and `blog/[slug]/` (SSG via `generateStaticParams`). `actions/contato.ts` is the contact-form server action.
+- **`src/app/`** — `layout.tsx` holds metadata, the `LegalService` JSON-LD (team from `getEquipe()`), fonts (`next/font`: Fraunces + Work Sans exposed as `--font-fraunces` / `--font-work-sans`), the global Header/Footer, and an inline pre-paint script. `page.tsx` composes the home sections. `blog/` and `blog/[slug]/` (SSG via `generateStaticParams`). `actions/contato.ts` is the contact-form server action; `api/revalidate/` is the Sanity webhook.
 - **`src/components/`** — one component per page section. Server components by default; only interactive pieces are client components (`Header`, `Duvidas`, `FormContato`, `ThemeToggle`, `Reveal`, `ToTop`, `ProgressoLeitura`).
 - **`src/lib/site.ts`** — single source for contact data (WhatsApp, email, address, map URLs), menu links and `SITE.oab`. Don't hardcode these elsewhere.
 
-### Content layer (prepared for Sanity.io)
+### Content layer (Sanity.io)
 
-Content lives in `src/data/*.ts`, typed by `src/types/*.ts`, and is **only** read through async functions in `src/lib/` (`getPosts`, `getPostBySlug`, `getEquipe`). Components never import `src/data` directly (the layout's JSON-LD is the one exception). The Sanity integration is meant to replace only the bodies of the `src/lib` functions; types mirror the future Sanity schemas (a sample GROQ projection is in `src/lib/blog.ts`).
+Content is **only** read through async functions in `src/lib/` (`getPosts`, `getPostBySlug`, `getEquipe`); components never import `src/data` directly. When `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, they query Sanity through `buscar()` in `src/lib/sanity.ts` (GROQ projections rename fields to match `src/types/*.ts`); otherwise they fall back to the mock data in `src/data/*.ts`, so CI and local dev run without env vars. The post body (`corpo`, Portable Text) is rendered by `components/CorpoArtigo.tsx`.
 
-`src/data/equipe.ts` contains `[PREENCHER]` placeholders for the lawyers' real names, OAB numbers and bios. Never invent this data. `temPendencias()` makes the production build warn and keeps placeholder entries out of the JSON-LD.
+- **Studio** lives in `studio/` (own `package.json`, excluded from the root `tsconfig`; project `2ousxa3t`, dataset `production`, which must stay public-read). Schemas in `studio/schemaTypes/` mirror `src/types/`; `studio/schemaTypes/seo.ts` duplicates the rules of `src/lib/seo.ts` as Studio warnings, so change both together. `studio/scripts/importar-mocks.ts` imports `src/data` into the dataset (idempotent). See `studio/README.md`.
+- **Caching:** queries are tagged `post` / `advogada` and cached indefinitely; the Sanity webhook hits `src/app/api/revalidate/route.ts` (signed with `SANITY_REVALIDATE_SECRET`), which calls `revalidateTag`. New slugs render on demand (`dynamicParams`).
+
+`src/data/equipe.ts` (and the imported Sanity documents) contain `[PREENCHER]` placeholders for the lawyers' real names, OAB numbers and bios. Never invent this data. `temPendencias()` makes the production build warn and keeps placeholder entries out of the JSON-LD.
 
 ### Styling
 

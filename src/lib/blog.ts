@@ -1,29 +1,36 @@
 import { POSTS_MOCK } from '@/data/posts';
 import type { Post } from '@/types/blog';
+import { buscar, sanityAtivo } from './sanity';
 import { verificarSeoPost } from './seo';
 
 /*
  * Camada de acesso aos posts do blog.
  *
- * Hoje lê os dados mockados. Na integração com o Sanity.io, basta trocar o
- * corpo destas funções por consultas GROQ — os componentes não mudam, pois
- * já consomem estas funções de forma assíncrona. Exemplo de projeção:
- *
- *   *[_type == "post"] | order(publishedAt desc) {
- *     "id": _id,
- *     titulo,
- *     "slug": slug.current,
- *     resumo,
- *     "data": publishedAt,
- *     "capaUrl": capa.asset->url,
- *     "capaAlt": capa.alt,
- *     categoria,
- *     palavrasChave,
- *     seoTitulo,
- *     seoDescricao,
- *     "atualizadoEm": _updatedAt
- *   }
+ * Lê os artigos do Sanity.io quando o projeto está configurado; senão, os dados
+ * mockados. A projeção GROQ dá aos campos os mesmos nomes de src/types/blog.ts,
+ * então os componentes não sabem de onde vêm os dados.
  */
+
+const CAMPOS = `
+  "id": _id,
+  titulo,
+  "slug": slug.current,
+  resumo,
+  "data": publishedAt,
+  "capaUrl": capa.asset->url,
+  "capaAlt": coalesce(capa.alt, ""),
+  categoria,
+  "palavrasChave": coalesce(palavrasChave, []),
+  seoTitulo,
+  seoDescricao,
+  "atualizadoEm": _updatedAt`;
+
+const CORPO = `"corpo": corpo[]{
+  ...,
+  _type == "image" => { "url": asset->url, "dimensoes": asset->metadata.dimensions }
+}`;
+
+const FILTRO = `_type == "post" && defined(slug.current) && defined(publishedAt)`;
 
 let seoVerificado = false;
 
@@ -37,13 +44,20 @@ function avisarSeo(posts: Post[]) {
 }
 
 export async function getPosts(limite?: number): Promise<Post[]> {
-  avisarSeo(POSTS_MOCK);
-  const ordenados = [...POSTS_MOCK].sort((a, b) => b.data.localeCompare(a.data));
-  return limite ? ordenados.slice(0, limite) : ordenados;
+  const posts = sanityAtivo
+    ? await buscar<Post[]>(`*[${FILTRO}] | order(publishedAt desc) {${CAMPOS}}`, {}, ['post'])
+    : [...POSTS_MOCK].sort((a, b) => b.data.localeCompare(a.data));
+  avisarSeo(posts);
+  return limite ? posts.slice(0, limite) : posts;
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  return POSTS_MOCK.find((p) => p.slug === slug) ?? null;
+  if (!sanityAtivo) return POSTS_MOCK.find((p) => p.slug === slug) ?? null;
+  return buscar<Post | null>(
+    `*[${FILTRO} && slug.current == $slug][0] {${CAMPOS}, ${CORPO}}`,
+    { slug },
+    ['post'],
+  );
 }
 
 export function formatarData(iso: string): string {
