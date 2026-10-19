@@ -1,5 +1,5 @@
 /**
- * Advogada da equipe. Espelha o schema `advogada` que será criado no Sanity.io.
+ * Advogada da equipe. Espelha o schema `advogada` do Sanity.io (studio/schemaTypes/advogada.ts).
  */
 export interface Advogada {
   id: string;

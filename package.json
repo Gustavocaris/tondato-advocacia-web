@@ -9,6 +9,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@portabletext/react": "^8.0.1",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^8.9.0",
+    "@sanity/webhook": "^4.0.4",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
