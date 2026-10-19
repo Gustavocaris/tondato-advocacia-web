@@ -2,7 +2,13 @@ import type { MetadataRoute } from 'next';
 import { getPosts } from '@/lib/blog';
 import { SITE } from '@/lib/site';
 
-/* /sitemap.xml — novos artigos entram automaticamente. */
+/*
+ * /sitemap.xml — novos artigos entram automaticamente.
+ * Gerado a cada acesso: guardado como página estática, a Vercel não o atualizava pelo
+ * webhook. Os dados continuam vindo do cache do Sanity, invalidado pela tag `post`.
+ */
+export const dynamic = 'force-dynamic';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPosts();
   const ultimoPost = posts[0]?.atualizadoEm ?? posts[0]?.data;
