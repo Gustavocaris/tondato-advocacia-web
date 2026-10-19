@@ -1,6 +1,6 @@
 # Sanity Studio — Tondato Advogados
 
-Painel onde o escritório publica os artigos do blog e edita a equipe do site.
+Painel onde o escritório publica os artigos do blog. Os demais dados do site (equipe, OAB, contato) são mantidos pelos desenvolvedores, no código.
 Projeto Sanity `2ousxa3t`, dataset `production`.
 
 ## Para quem edita o conteúdo
@@ -9,9 +9,11 @@ Acesse o Studio pelo link enviado (ex.: `https://tondato.sanity.studio`) e entre
 
 **Novo artigo:** *Artigo* → **+** → preencha título, clique em **Generate** no endereço, escolha a categoria, escreva o resumo, envie a capa (com a descrição da imagem) e o texto. Na aba **SEO**, informe as palavras-chave (a primeira é a principal). Clique em **Publish**. O site é atualizado em poucos segundos.
 
+**No texto do artigo**, a barra do editor tem negrito, itálico, sublinhado, destaque (marca-texto), link, listas, citação e imagem. Para criar um link, selecione o trecho e clique no ícone de corrente; links para outros sites abrem em nova aba.
+
 **Avisos amarelos** não impedem a publicação: são dicas de SEO (título longo, resumo fora do tamanho ideal, palavra-chave principal fora do título/resumo). **Erros vermelhos** são campos obrigatórios.
 
-**Equipe:** *Advogada* → edite nome, inscrição na OAB, formação, trajetória e foto (retrato vertical 3:4). A *ordem de exibição* define a sequência no site. Os textos devem seguir o Provimento 205/2021 da OAB: tom informativo, sem autopromoção nem promessa de resultado.
+Os textos devem seguir o Provimento 205/2021 da OAB: tom informativo, sem autopromoção nem promessa de resultado.
 
 ## Para quem desenvolve
 
@@ -25,7 +27,7 @@ Os schemas ficam em `schemaTypes/` e espelham os tipos do site (`../src/types`).
 
 ### Importar os dados de exemplo
 
-Cria no dataset os posts e a equipe de `../src/data` (com as imagens de `../public`). Pode rodar de novo sem duplicar.
+Cria no dataset os posts de exemplo de `../src/data/posts.ts` (com as capas de `../public`). Pode rodar de novo sem duplicar.
 
 ```bash
 npx sanity login
@@ -41,7 +43,7 @@ Em [sanity.io/manage](https://www.sanity.io/manage) → projeto → **API** → 
 | URL | `https://<domínio do site>/api/revalidate` |
 | Dataset | `production` |
 | Trigger on | Create, Update, Delete |
-| Filter | `_type in ["post", "advogada"]` |
+| Filter | `_type == "post"` |
 | Projection | `{_type}` |
 | HTTP method | POST |
 | Secret | o mesmo valor de `SANITY_REVALIDATE_SECRET` na Vercel |
