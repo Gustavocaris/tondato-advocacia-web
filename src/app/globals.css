@@ -112,11 +112,12 @@
   .equipe-txt{display:flex;flex-direction:column;gap:20px;max-width:580px}
   .equipe-foto{width:100%}
   .equipe-foto img{display:block;width:100%;height:auto;filter:drop-shadow(0 28px 32px rgba(42,33,29,.22))}
-  .advogadas{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-  .adv-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);transition:translate .3s ease,box-shadow .3s ease,border-color .3s ease}
-  .adv-foto{position:relative;min-height:360px;overflow:hidden;background:var(--bg2)}
+  /* uma advogada por linha: o card ocupa a largura toda e a foto mantém a proporção 3:4, sem cortes */
+  .advogadas{display:grid;grid-template-columns:1fr;gap:32px}
+  .adv-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:clamp(220px,24vw,320px) minmax(0,1fr);transition:translate .3s ease,box-shadow .3s ease,border-color .3s ease}
+  .adv-foto{position:relative;aspect-ratio:3/4;align-self:start;margin:clamp(16px,1.8vw,24px) 0 clamp(16px,1.8vw,24px) clamp(16px,1.8vw,24px);border-radius:14px;overflow:hidden;background:var(--bg2)}
   .adv-foto img{object-fit:cover;object-position:center top;transition:transform .6s ease}
-  .adv-corpo{display:flex;flex-direction:column;gap:12px;padding:clamp(24px,2.6vw,36px)}
+  .adv-corpo{display:flex;flex-direction:column;gap:12px;padding:clamp(24px,3vw,44px)}
   .adv-corpo h3{font-size:22px;line-height:1.25}
   .adv-oab{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
   .adv-formacao{list-style:none;padding:12px 0 0;margin:4px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
@@ -334,8 +335,6 @@
   @media (max-width:1180px){
     .hero{gap:48px}
     .equipe-intro{gap:48px}
-    .adv-card{grid-template-columns:1fr}
-    .adv-foto{min-height:0;aspect-ratio:4/3}
   }
 
   /* ===== Tablet / mobile: menu vira gaveta ===== */
@@ -389,8 +388,9 @@
     .contatos{grid-template-columns:1fr}
     .ct{padding:26px}
     .ct a,.ct address{font-size:18px}
-    .advogadas{grid-template-columns:1fr;gap:24px}
-    .adv-foto{aspect-ratio:4/5}
+    .advogadas{gap:24px}
+    .adv-card{grid-template-columns:1fr}
+    .adv-foto{aspect-ratio:4/5;margin:16px 16px 0}
     details{padding:0 18px}
     summary{font-size:17px;padding:18px 30px 18px 0}
     summary::after{top:22px}

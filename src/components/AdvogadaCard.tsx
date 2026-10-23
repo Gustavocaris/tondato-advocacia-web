@@ -9,7 +9,7 @@ export default function AdvogadaCard({ advogada }: { advogada: Advogada }) {
           src={advogada.foto}
           alt={advogada.fotoAlt}
           fill
-          sizes="(max-width: 600px) 100vw, (max-width: 1440px) 45vw, 620px"
+          sizes="(max-width: 600px) 100vw, 320px"
         />
       </div>
       <div className="adv-corpo">
