@@ -36,14 +36,14 @@ Content is **only** read through async functions in `src/lib/` (`getPosts`, `get
 - **Studio** lives in `studio/` (own `package.json`, excluded from the root `tsconfig`; project `2ousxa3t`, dataset `production`, which must stay public-read). The only schema is `post` (`studio/schemaTypes/post.tsx`, mirrors `src/types/blog.ts`; body marks: strong, em, underline, highlight, link); `studio/schemaTypes/seo.ts` duplicates the rules of `src/lib/seo.ts` as Studio warnings, so change both together. `studio/scripts/importar-mocks.ts` imports the mock posts into the dataset (idempotent). See `studio/README.md`.
 - **Caching:** post queries are tagged `post` and revalidate hourly as a fallback (the fetch cache in `.next/cache` survives rebuilds, so never use `revalidate: false`); the Sanity webhook hits `src/app/api/revalidate/route.ts` (signed with `SANITY_REVALIDATE_SECRET`), which calls `revalidateTag`. New slugs render on demand (`dynamicParams`).
 
-`src/data/equipe.ts` contains `[PREENCHER]` placeholders for the lawyers' real names, OAB numbers and bios. Never invent this data. `temPendencias()` makes the production build warn and keeps placeholder entries out of the JSON-LD.
+`src/data/equipe.ts` holds the lawyers' real names, OAB numbers, education and bios, as supplied by the firm. Never invent or embellish this data. A `[PREENCHER]` placeholder in any field makes `temPendencias()` warn in the production build and keeps that entry out of the JSON-LD.
 
 ### Styling
 
 All styles are in one file, `src/app/globals.css` — plain CSS with no Tailwind or CSS modules. Follow these conventions:
 
 - **Theme tokens on `:root`, dark values on `:root[data-theme="dark"]`.** Use tokens, never raw hex. `--accent` is for highlight *text, lines and markers* (wine in light, pink in dark, because wine text is illegible on dark backgrounds). `--wine` / `--wine-dk` are for *fills* (buttons, CTA, badges). Translucent accents use `color-mix(in srgb,var(--accent) N%,transparent)`.
-- **Theme switching:** the inline script in `layout.tsx` sets `data-theme` before first paint from `localStorage.tema` or `prefers-color-scheme`. `ThemeToggle` changes it, using `document.startViewTransition` when available.
+- **Theme switching:** the inline script in `layout.tsx` sets `data-theme` before first paint: light by default, dark only when `localStorage.tema` is `'dark'` (the visitor picked it in `ThemeToggle`). The system `prefers-color-scheme` is deliberately ignored. `ThemeToggle` changes it, using `document.startViewTransition` when available.
 - **Breakpoints:** 1180px (small laptop), 980px (tablet; the menu becomes a slide-in drawer), 600px (phone). Responsive overrides sit in the media-query blocks at the end of the file.
 - **Scroll animations:** wrap content in `<Reveal>`; `<Reveal stagger>` cascades its direct children via `--i`. Hover effects that move elements use the CSS `translate` property, not `transform`, so they don't collide with the reveal transition. Hover rules live inside `@media (hover:hover)`.
 - **Reduced motion:** everything must degrade under `prefers-reduced-motion` (there is a dedicated block). The pillars marquee becomes a static list.

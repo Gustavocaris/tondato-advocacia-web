@@ -8,34 +8,15 @@ type Tema = 'light' | 'dark';
 const CHAVE = 'tema';
 const temaAtual = (): Tema => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
 
-function lerEscolha(): Tema | null {
-  try {
-    const v = localStorage.getItem(CHAVE);
-    return v === 'dark' || v === 'light' ? v : null;
-  } catch {
-    return null;
-  }
-}
-
 /*
  * Alterna entre tema claro e escuro. O tema inicial é definido antes da pintura pelo
- * script inline do layout (escolha salva ou, na falta dela, o tema do sistema).
+ * script inline do layout: claro, a menos que o visitante tenha escolhido o escuro aqui.
  */
 export default function ThemeToggle() {
   const [tema, setTema] = useState<Tema | null>(null);
 
   useEffect(() => {
     setTema(temaAtual());
-    // Sem escolha salva, acompanha mudanças do tema do sistema.
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const aoMudar = (e: MediaQueryListEvent) => {
-      if (lerEscolha()) return;
-      const novo: Tema = e.matches ? 'dark' : 'light';
-      document.documentElement.dataset.theme = novo;
-      setTema(novo);
-    };
-    mq.addEventListener('change', aoMudar);
-    return () => mq.removeEventListener('change', aoMudar);
   }, []);
 
   const alternar = () => {
