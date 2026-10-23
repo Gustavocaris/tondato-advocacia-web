@@ -36,7 +36,7 @@ Content is **only** read through async functions in `src/lib/` (`getPosts`, `get
 - **Studio** lives in `studio/` (own `package.json`, excluded from the root `tsconfig`; project `2ousxa3t`, dataset `production`, which must stay public-read). The only schema is `post` (`studio/schemaTypes/post.tsx`, mirrors `src/types/blog.ts`; body marks: strong, em, underline, highlight, link); `studio/schemaTypes/seo.ts` duplicates the rules of `src/lib/seo.ts` as Studio warnings, so change both together. `studio/scripts/importar-mocks.ts` imports the mock posts into the dataset (idempotent). See `studio/README.md`.
 - **Caching:** post queries are tagged `post` and revalidate hourly as a fallback (the fetch cache in `.next/cache` survives rebuilds, so never use `revalidate: false`); the Sanity webhook hits `src/app/api/revalidate/route.ts` (signed with `SANITY_REVALIDATE_SECRET`), which calls `revalidateTag`. New slugs render on demand (`dynamicParams`).
 
-`src/data/equipe.ts` contains `[PREENCHER]` placeholders for the lawyers' real names, OAB numbers and bios. Never invent this data. `temPendencias()` makes the production build warn and keeps placeholder entries out of the JSON-LD.
+`src/data/equipe.ts` holds the lawyers' real names, OAB numbers, education and bios, as supplied by the firm. Never invent or embellish this data. A `[PREENCHER]` placeholder in any field makes `temPendencias()` warn in the production build and keeps that entry out of the JSON-LD.
 
 ### Styling
 
