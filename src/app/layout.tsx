@@ -108,13 +108,14 @@ async function montarJsonLd() {
   };
 }
 
-const temaScript = `(function(){var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('tema')}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.dataset.theme=t})()`;
+/* O tema claro é sempre o padrão; o escuro só vale quando o visitante o escolheu no ThemeToggle. */
+const temaScript = `(function(){var d=document.documentElement;d.classList.add('js');var t;try{t=localStorage.getItem('tema')}catch(e){}d.dataset.theme=t==='dark'?'dark':'light'})()`;
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${workSans.variable}`} suppressHydrationWarning>
       <head>
-        {/* Antes da primeira pintura: ativa as animações de entrada (.js) e aplica o tema salvo ou o do sistema. */}
+        {/* Antes da primeira pintura: ativa as animações de entrada (.js) e aplica o tema escolhido (claro por padrão). */}
         <script dangerouslySetInnerHTML={{ __html: temaScript }} />
         <JsonLd dados={await montarJsonLd()} />
       </head>
