@@ -43,7 +43,7 @@ Content is **only** read through async functions in `src/lib/` (`getPosts`, `get
 All styles are in one file, `src/app/globals.css` — plain CSS with no Tailwind or CSS modules. Follow these conventions:
 
 - **Theme tokens on `:root`, dark values on `:root[data-theme="dark"]`.** Use tokens, never raw hex. `--accent` is for highlight *text, lines and markers* (wine in light, pink in dark, because wine text is illegible on dark backgrounds). `--wine` / `--wine-dk` are for *fills* (buttons, CTA, badges). Translucent accents use `color-mix(in srgb,var(--accent) N%,transparent)`.
-- **Theme switching:** the inline script in `layout.tsx` sets `data-theme` before first paint from `localStorage.tema` or `prefers-color-scheme`. `ThemeToggle` changes it, using `document.startViewTransition` when available.
+- **Theme switching:** the inline script in `layout.tsx` sets `data-theme` before first paint: light by default, dark only when `localStorage.tema` is `'dark'` (the visitor picked it in `ThemeToggle`). The system `prefers-color-scheme` is deliberately ignored. `ThemeToggle` changes it, using `document.startViewTransition` when available.
 - **Breakpoints:** 1180px (small laptop), 980px (tablet; the menu becomes a slide-in drawer), 600px (phone). Responsive overrides sit in the media-query blocks at the end of the file.
 - **Scroll animations:** wrap content in `<Reveal>`; `<Reveal stagger>` cascades its direct children via `--i`. Hover effects that move elements use the CSS `translate` property, not `transform`, so they don't collide with the reveal transition. Hover rules live inside `@media (hover:hover)`.
 - **Reduced motion:** everything must degrade under `prefers-reduced-motion` (there is a dedicated block). The pillars marquee becomes a static list.
