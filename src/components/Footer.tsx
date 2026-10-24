@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MENU_LINKS, SITE } from '@/lib/site';
+import PreferenciasCookies from './PreferenciasCookies';
 
 const DESENVOLVEDOR = { nome: 'Inteldev', slogan: 'desenvolvimento inteligente', url: 'https://www.instagram.com/intel_dev/' };
 
@@ -50,6 +51,7 @@ export default function Footer() {
             <a href={SITE.politicaPrivacidadeUrl} download>
               Política de Privacidade (PDF)
             </a>
+            {process.env.NEXT_PUBLIC_CLARITY_ID && <PreferenciasCookies />}
             <a href={DESENVOLVEDOR.url} target="_blank" rel="noopener noreferrer">
               Feito por <strong>{DESENVOLVEDOR.nome}</strong> — {DESENVOLVEDOR.slogan}
             </a>

@@ -199,8 +199,9 @@
   .footer-base{border-top:1px solid var(--line)}
   .footer-base .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-top:22px;padding-bottom:22px;font-size:13px;color:var(--faint)}
   .footer-links{display:flex;flex-wrap:wrap;gap:8px 24px}
-  .footer-links a{color:var(--faint)}
-  .footer-links a:hover{color:var(--accent)}
+  .footer-links a,.footer-links button{color:var(--faint)}
+  .footer-links button{background:none;border:0;padding:0;font:inherit;cursor:pointer}
+  .footer-links a:hover,.footer-links button:hover{color:var(--accent)}
   .footer-links strong{font-weight:600}
 
   .wa-wrap{position:fixed;right:20px;bottom:20px;z-index:50}
@@ -236,6 +237,16 @@
   /* voltar ao topo */
   .to-top{position:fixed;left:20px;bottom:20px;z-index:50;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--elev);color:var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12);opacity:0;visibility:hidden;transform:translateY(10px);transition:all .25s ease}
   .to-top.on{opacity:1;visibility:visible;transform:none}
+
+  /* aviso de cookies / privacidade (LGPD) */
+  .aviso-cookies{position:fixed;left:50%;bottom:20px;z-index:60;width:min(760px,calc(100% - 32px));translate:-50% 0;display:flex;align-items:center;gap:16px 24px;padding:18px 22px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px -18px rgba(36,28,24,.45);animation:aviso-entra .35s ease both}
+  .aviso-cookies p{flex:1;margin:0;font-size:14px;line-height:1.55;color:var(--txt)}
+  .aviso-cookies a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  .aviso-cookies-acoes{display:flex;gap:10px;flex-shrink:0}
+  .aviso-cookies .btn{min-height:40px;padding:10px 22px;font-size:14px;font-family:inherit;cursor:pointer}
+  .aviso-cookies .btn-wine{border:0}
+  .aviso-cookies .btn-ghost{background:transparent}
+  @keyframes aviso-entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
   /* animação ao rolar */
   .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
@@ -408,6 +419,8 @@
     .mapa-frame iframe{min-height:342px}
     .footer-base .wrap{padding-bottom:84px;flex-direction:column;align-items:flex-start}
     .footer-links{flex-direction:column}
+    .aviso-cookies{flex-direction:column;align-items:stretch;bottom:16px;padding:18px}
+    .aviso-cookies-acoes .btn{flex:1}
     .cta::after{right:-4%;font-size:200px}
     .wa-wrap{right:16px;bottom:16px}
     .wa-float{width:54px;height:54px}

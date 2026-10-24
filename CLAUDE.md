@@ -21,7 +21,9 @@ npm run typecheck  # tsc --noEmit
 
 There is no linter and no test suite. GitHub Actions CI (`.github/workflows/ci.yml`, explained in `docs/CI.md`) runs `typecheck` + `build` on Node 20 and 22, plus a `tsc` of `studio/`, for every push and for PRs to `staging`/`main`. Verify changes with `typecheck` + `build`, and check visuals in light and dark themes at desktop (1440px) and mobile (390px) widths.
 
-Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` / `SANITY_REVALIDATE_SECRET` for content, `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form.
+Node ≥ 20.9. Env vars (see `.env.example`): `NEXT_PUBLIC_SITE_URL` (absolute URLs for Open Graph/JSON-LD; defaults to localhost), `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` / `SANITY_REVALIDATE_SECRET` for content, `RESEND_API_KEY` (+ optional `CONTATO_TO`, `CONTATO_FROM`) for the contact form, optional `NEXT_PUBLIC_CLARITY_ID` for Microsoft Clarity.
+
+`AvisoCookies` is the LGPD notice: without `NEXT_PUBLIC_CLARITY_ID` it is informational ("Entendi"); with it, it asks for consent and Clarity loads **only after "Aceitar"** (choice in `localStorage.cookies`; the footer's "Preferências de cookies" reopens it). Never add analytics/pixels that load before consent.
 
 ## Architecture
 

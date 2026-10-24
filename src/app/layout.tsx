@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Fraunces, Work_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
+import AvisoCookies from '@/components/AvisoCookies';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import JsonLd from '@/components/JsonLd';
@@ -125,6 +126,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Footer />
         <WhatsAppFloat />
         <ToTop />
+        <AvisoCookies />
       </body>
     </html>
   );
