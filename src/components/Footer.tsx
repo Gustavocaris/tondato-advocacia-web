@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MENU_LINKS, SITE } from '@/lib/site';
 
+const DESENVOLVEDOR = { nome: 'Inteldev', slogan: 'desenvolvimento inteligente', url: 'https://www.instagram.com/intel_dev/' };
+
 export default function Footer() {
   return (
     <footer>
@@ -25,6 +27,9 @@ export default function Footer() {
             WhatsApp {SITE.whatsappExibicao}
           </a>
           <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <a href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">
+            Instagram {SITE.instagramExibicao}
+          </a>
         </div>
         <div className="footer-col">
           <p className="footer-tit">Endereço</p>
@@ -40,6 +45,14 @@ export default function Footer() {
         <div className="wrap">
           <span>
             © {new Date().getFullYear()} {SITE.nome}. Todos os direitos reservados.
+          </span>
+          <span className="footer-links">
+            <a href={SITE.politicaPrivacidadeUrl} download>
+              Política de Privacidade (PDF)
+            </a>
+            <a href={DESENVOLVEDOR.url} target="_blank" rel="noopener noreferrer">
+              Feito por <strong>{DESENVOLVEDOR.nome}</strong> — {DESENVOLVEDOR.slogan}
+            </a>
           </span>
         </div>
       </div>

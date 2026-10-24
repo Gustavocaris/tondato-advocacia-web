@@ -1,7 +1,10 @@
 import { SITE } from '@/lib/site';
 import FormContato from './FormContato';
-import { IconeConversa, IconeEmail, IconeLocal } from './icons';
+import { IconeConversa, IconeEmail, IconeInstagram, IconeLocal } from './icons';
 import Reveal from './Reveal';
+
+/* Quebra o e-mail depois do "@" quando não couber na coluna. */
+const [emailUsuario, emailDominio] = SITE.email.split('@');
 
 export default function Contato() {
   return (
@@ -30,7 +33,19 @@ export default function Contato() {
               <IconeEmail />
             </div>
             <small>E-mail</small>
-            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <a href={`mailto:${SITE.email}`}>
+              {emailUsuario}@<wbr />
+              {emailDominio}
+            </a>
+          </div>
+          <div className="ct">
+            <div className="ico">
+              <IconeInstagram />
+            </div>
+            <small>Instagram</small>
+            <a href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer">
+              {SITE.instagramExibicao}
+            </a>
           </div>
           <div className="ct">
             <div className="ico">

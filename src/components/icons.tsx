@@ -38,3 +38,13 @@ export function IconeLocal(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function IconeInstagram(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...iconeProps} {...props}>
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M17.5 6.5h.01" />
+    </svg>
+  );
+}

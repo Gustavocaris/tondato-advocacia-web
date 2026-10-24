@@ -11,6 +11,10 @@ export const SITE = {
   /** Nº de inscrição da sociedade na OAB/PR (art. 44 do Código de Ética). Exibido no rodapé quando preenchido. */
   oab: null as string | null,
   email: 'tondatoadvocacia@gmail.com',
+  instagramUrl: 'https://www.instagram.com/tondatoadvocacia',
+  instagramExibicao: '@tondatoadvocacia',
+  /** PDF da política de privacidade (LGPD), em public/docs/. */
+  politicaPrivacidadeUrl: '/docs/politica-privacidade.pdf',
   endereco: {
     rua: 'Rua Barão do Rio Branco, 2242',
     cidade: 'Toledo',

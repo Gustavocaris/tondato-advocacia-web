@@ -8,6 +8,8 @@ export interface Advogada {
   oab: string;
   formacao: string[];
   bio: string;
+  /** URL do perfil no Instagram (opcional). */
+  instagram?: string;
   foto: string;
   fotoAlt: string;
 }

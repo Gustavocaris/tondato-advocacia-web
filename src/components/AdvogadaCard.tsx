@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Advogada } from '@/types/equipe';
+import { IconeInstagram } from './icons';
 
 export default function AdvogadaCard({ advogada }: { advogada: Advogada }) {
   return (
@@ -21,6 +22,17 @@ export default function AdvogadaCard({ advogada }: { advogada: Advogada }) {
           ))}
         </ul>
         <p className="lead">{advogada.bio}</p>
+        {advogada.instagram && (
+          <a
+            className="adv-insta"
+            href={advogada.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Instagram de ${advogada.nome} (abre em nova aba)`}
+          >
+            <IconeInstagram width={18} height={18} />
+          </a>
+        )}
       </div>
     </article>
   );
